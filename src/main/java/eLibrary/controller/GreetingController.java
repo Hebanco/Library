@@ -1,17 +1,22 @@
-package eLibrary;
+package eLibrary.controller;
 
+import eLibrary.domain.Book;
+import eLibrary.repos.BookRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class GreetingController {
 
-    @GetMapping("/greeting")
+
+
+    @GetMapping
     public String greeting(
            Model model
     ){
         return "greeting";
     }
+
+
 }
