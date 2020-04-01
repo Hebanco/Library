@@ -4,10 +4,18 @@
     <meta charset="UTF-8"/>
 </head>
 <body>
+<div>
+    <form action="/logout" method="post">
+        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+        <input type="submit" value="Sing Out"/>
+    </form>
+</div>
+
 <div>Books list</div>
 <div id="books-list">
     <form method="post" action="filter">
         <input type="text" name="filter"/>
+        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <button type="submit">Найти</button>
     </form>
 
