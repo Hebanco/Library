@@ -7,5 +7,6 @@
 <body>
 <h5>Hello</h5>
 <a href="/bookList">Списоок книг</a>
+<a href="/newLesson">New lesson</a>
 </body>
 </html>
