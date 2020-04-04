@@ -18,10 +18,21 @@ public class BookController {
     }
 
     @GetMapping("bookList")
-    public String main(Model model){
+    public String main(
+            Model model,
+            @RequestParam(required = false, defaultValue = "") String filter
+    ){
 
-        Iterable<Book> books = bookRepo.findAll();
+        Iterable<Book> books;
+
+        if(!filter.isEmpty()) {
+            books = bookRepo.findByName(filter);
+        } else {
+            books = bookRepo.findAll();
+        }
+
         model.addAttribute("books", books);
+        model.addAttribute("filter", filter);
 
         return "bookList";
     }
@@ -44,20 +55,4 @@ public class BookController {
         return "redirect:/bookList";
     }
 
-    @PostMapping("filter")
-    public String filter(
-            @RequestParam String filter,
-            Model model
-    ){
-        Iterable<Book> books;
-
-        if(!filter.isEmpty()) {
-            books = bookRepo.findByName(filter);
-        } else {
-            books = bookRepo.findAll();
-        }
-        model.addAttribute("books",books);
-
-        return "bookList";
-    }
 }

@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta content="charset=UTF-8" />
-    <title>Title</title>
-</head>
-<body>
+<#import "parts/common.ftl" as c>
+<@c.page>
 <h5>Hello</h5>
 <a href="/bookList">Списоок книг</a>
 <a href="/newLesson">New lesson</a>
-</body>
-</html>
+</@c.page>

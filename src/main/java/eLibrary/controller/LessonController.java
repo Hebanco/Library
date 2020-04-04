@@ -1,6 +1,8 @@
 package eLibrary.controller;
 
+import eLibrary.domain.Book;
 import eLibrary.domain.Lesson;
+import eLibrary.domain.LessonSubGroup;
 import eLibrary.domain.User;
 import eLibrary.repos.LessonRepo;
 import eLibrary.repos.SubGroupRepo;
@@ -26,7 +28,7 @@ public class LessonController {
 
     @GetMapping("newLesson")
     public String newLesson(Model model){
-        return "lessonProfile";
+        return "lessonCreate";
     }
 
     @PostMapping("newLesson")
@@ -41,6 +43,31 @@ public class LessonController {
 
         lessonRepo.save(lesson);
 
+        
+
         return "redirect:/newLesson";
+    }
+
+    @GetMapping("newGroup")
+    public String newGroup(Model model){
+        return "subGroupCreate";
+    }
+
+    @PostMapping("newGroup")
+    public String newGroup(
+            Model model,
+            @RequestParam String name,
+            @RequestParam Book bookId
+    ){
+        LessonSubGroup subGroupFromDb = subGroupRepo.findByName(name);
+        if(subGroupFromDb!=null){
+            subGroupFromDb.getGroupsBook().add(bookId);
+        }
+        else {
+            LessonSubGroup subGroup = new LessonSubGroup();
+            subGroup.setName(name);
+            subGroup.getGroupsBook().add(bookId);
+        }
+        return "redirect:/newGroup";
     }
 }
