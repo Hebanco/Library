@@ -39,7 +39,7 @@ public class BookController {
 
     @GetMapping("newBook")
     public String addBook(Model model){
-        return "bookProfile";
+        return "bookCreate";
     }
 
     @PostMapping("newBook")
