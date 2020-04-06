@@ -17,13 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LessonController {
 
     private final LessonRepo lessonRepo;
-    private final SubGroupRepo subGroupRepo;
-    private final UserRepo userRepo;
 
-    public LessonController(LessonRepo lessonRepo, SubGroupRepo subGroupRepo, UserRepo userRepo) {
+
+    public LessonController(LessonRepo lessonRepo) {
         this.lessonRepo = lessonRepo;
-        this.subGroupRepo = subGroupRepo;
-        this.userRepo = userRepo;
     }
 
     @GetMapping("newLesson")
@@ -35,39 +32,14 @@ public class LessonController {
     public String saveLesson(
             Model model,
             @RequestParam String name,
-            @RequestParam User teacherId
+            @RequestParam(name = "teacherId") User teacher
     ){
         Lesson lesson = new Lesson();
         lesson.setName(name);
-        lesson.setTeacher(teacherId);
+        lesson.setTeacher(teacher);
 
         lessonRepo.save(lesson);
 
-        
-
         return "redirect:/newLesson";
-    }
-
-    @GetMapping("newGroup")
-    public String newGroup(Model model){
-        return "subGroupCreate";
-    }
-
-    @PostMapping("newGroup")
-    public String newGroup(
-            Model model,
-            @RequestParam String name,
-            @RequestParam Book bookId
-    ){
-        LessonSubGroup subGroupFromDb = subGroupRepo.findByName(name);
-        if(subGroupFromDb!=null){
-            subGroupFromDb.getGroupsBook().add(bookId);
-        }
-        else {
-            LessonSubGroup subGroup = new LessonSubGroup();
-            subGroup.setName(name);
-            subGroup.getGroupsBook().add(bookId);
-        }
-        return "redirect:/newGroup";
     }
 }

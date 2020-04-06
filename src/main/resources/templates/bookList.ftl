@@ -8,7 +8,7 @@
 
     <div>Books list</div>
     <div id="books-list">
-        <form method="get" action="/bookList">
+        <form method="get" action="/book/list">
             <input type="text" name="filter" value="${filter}"/>
             <button type="submit">Найти</button>
         </form>
@@ -19,11 +19,12 @@
                 <span>${book.name}</span>
                 <span>${book.author}</span>
                 <a>${book.descriptions}</a>
+                <a href="/book/${book.id}">Edit</a>
             </div>
         <#else>
             No books
         </#list>
 
     </div>
-    <a href="/newBook">Добавить книгу</a>
+    <a href="/book/new">Добавить книгу</a>
 </@c.page>

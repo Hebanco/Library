@@ -1,14 +1,15 @@
 package eLibrary.controller;
 
 import eLibrary.domain.Book;
+import eLibrary.domain.Role;
+import eLibrary.domain.User;
 import eLibrary.repos.BookRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/book")
 public class BookController {
 
     private final BookRepo bookRepo;
@@ -17,7 +18,7 @@ public class BookController {
         this.bookRepo = bookRepo;
     }
 
-    @GetMapping("bookList")
+    @GetMapping("/list")
     public String main(
             Model model,
             @RequestParam(required = false, defaultValue = "") String filter
@@ -37,12 +38,12 @@ public class BookController {
         return "bookList";
     }
 
-    @GetMapping("newBook")
+    @GetMapping("/new")
     public String addBook(Model model){
         return "bookCreate";
     }
 
-    @PostMapping("newBook")
+    @PostMapping("/new")
     public String add(
             @RequestParam String name,
             @RequestParam String author,
@@ -52,7 +53,29 @@ public class BookController {
         Book book = new Book(name, author, description);
         bookRepo.save(book);
 
-        return "redirect:/bookList";
+        return "redirect:/book/list";
+    }
+
+    @GetMapping("{book}")
+    public String bookEditForm(@PathVariable Book book, Model model){
+        model.addAttribute("book", book);
+        return "bookProfile";
+    }
+
+    @PostMapping
+    public String bookSave(
+            @RequestParam String name,
+            @RequestParam String author,
+            @RequestParam String description,
+            @RequestParam("bookId") Book book
+    ){
+        book.setName(name);
+        book.setAuthor(author);
+        book.setDescriptions(description);
+
+        bookRepo.save(book);
+
+        return "redirect:/book/list";
     }
 
 }
