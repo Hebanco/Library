@@ -54,7 +54,7 @@ public class GroupController {
         if(filter.isEmpty()){
             possibleBooks = bookRepo.findFiveByRandom();
         } else{
-            possibleBooks = bookRepo.findByName(filter);
+            possibleBooks = bookRepo.findByNameLike(filter);
         }
         model.addAttribute("filter", filter);
         model.addAttribute("possibleBook", possibleBooks);

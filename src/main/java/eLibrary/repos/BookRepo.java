@@ -12,4 +12,6 @@ public interface BookRepo extends CrudRepository<Book, Long> {
 
     @Query(value = "SELECT * FROM `book` ORDER BY RAND() LIMIT 5", nativeQuery = true)
     List<Book> findFiveByRandom();
+
+    List<Book> findByNameLike(String name);
 }
