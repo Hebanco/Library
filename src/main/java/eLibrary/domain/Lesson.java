@@ -17,7 +17,7 @@ public class Lesson {
     private User teacher;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subgroup_id")
+    @JoinColumn(name = "lesson_id")
     private Set<LessonSubGroup> subGroups = new HashSet<>();
 
     public Lesson() {

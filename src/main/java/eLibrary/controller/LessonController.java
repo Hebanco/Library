@@ -1,6 +1,5 @@
 package eLibrary.controller;
 
-import eLibrary.domain.Book;
 import eLibrary.domain.Lesson;
 import eLibrary.domain.LessonSubGroup;
 import eLibrary.domain.User;
@@ -8,39 +7,24 @@ import eLibrary.repos.LessonRepo;
 import eLibrary.repos.UserRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.HashSet;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/lesson")
 public class LessonController {
 
     private final LessonRepo lessonRepo;
-    private final UserRepo userRepo;
 
-    public LessonController(LessonRepo lessonRepo, UserRepo userRepo) {
+    public LessonController(LessonRepo lessonRepo) {
         this.lessonRepo = lessonRepo;
-        this.userRepo = userRepo;
     }
 
     @GetMapping("/new")
     public String newLesson(
             Model model,
-            @RequestParam(required = false, defaultValue = "") String filter
+            @RequestParam(name = "teacherId"/*, required = false, defaultValue = ""*/) User teacher
     ){
-        Iterable<User> teachers;
-        if(!filter.isEmpty()) {
-            teachers = userRepo.findTeacherByUsername(filter);
-        } else {
-            teachers = new HashSet<>();
-        }
-        model.addAttribute("possibleTeacher",teachers);
-        model.addAttribute("filter", filter);
+        model.addAttribute("teacher", teacher);
         return "lessonCreate";
     }
 
@@ -56,16 +40,56 @@ public class LessonController {
 
         lessonRepo.save(lesson);
 
-        return "redirect:/lesson/new";
+        return "redirect:/user/"+teacher.getId();
     }
 
-    @PostMapping("subGroupFilter")
-    public String subGroupFilter(
+    @GetMapping("/list/{teacher}")
+    public String teacherLesson(
             Model model,
-            @RequestParam("subGroupId") LessonSubGroup subGroup,
-            @RequestParam String filter
+            @PathVariable User teacher
     ){
-        String s = "redirect:/lesson/"+subGroup.getId()+"?filter="+filter;
-        return s;
+        model.addAttribute("lessons",lessonRepo.findByTeacher(teacher));
+        return "lessonList";
+    }
+
+    @GetMapping("/list")
+    public String allLesson(Model model){
+        model.addAttribute("lessons", lessonRepo.findAll());
+        return "lessonList";
+    }
+
+//    @GetMapping("/{lesson}/addSubGroup")
+//    public String newSubGroup(
+//            Model model,
+//            @PathVariable Lesson lesson
+//            ){
+//        LessonSubGroup subGroup = new LessonSubGroup();
+//        lesson.getSubGroups().add(subGroup);
+//        lessonRepo.save(lesson);
+//
+//        return "redirect:/subGroup/"+subGroup.getId();
+//    }
+
+    @GetMapping("{lesson}")
+    public String lessonEdit(
+            Model model,
+            @PathVariable Lesson lesson
+    ){
+        model.addAttribute("lesson", lesson);
+        model.addAttribute("subGroups", lesson.getSubGroups());
+
+        return "lessonEdit";
+    }
+
+    @GetMapping("/{lesson}/delete/{subGroup}")
+    public String deleteSubGroup(
+            Model model,
+            @PathVariable Lesson lesson,
+            @PathVariable LessonSubGroup subGroup
+    ){
+        lesson.getSubGroups().remove(subGroup);
+        lessonRepo.save(lesson);
+
+        return "redirect:/lesson/"+lesson.getId();
     }
 }
