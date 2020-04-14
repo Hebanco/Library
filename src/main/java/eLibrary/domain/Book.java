@@ -16,6 +16,8 @@ public class Book {
     private String author;
     private String descriptions;
 
+    private String filename;
+
     public Book() {
     }
 
@@ -55,5 +57,13 @@ public class Book {
 
     public void setDescriptions(String descriptions) {
         this.descriptions = descriptions;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

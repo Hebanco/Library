@@ -1,18 +1,29 @@
 package eLibrary.controller;
 
 import eLibrary.domain.Book;
-import eLibrary.domain.Role;
-import eLibrary.domain.User;
 import eLibrary.repos.BookRepo;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/book")
 public class BookController {
 
     private final BookRepo bookRepo;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     public BookController(BookRepo bookRepo) {
         this.bookRepo = bookRepo;
@@ -48,18 +59,34 @@ public class BookController {
             @RequestParam String name,
             @RequestParam String author,
             @RequestParam String description,
+            @RequestParam("file") MultipartFile file,
             Model model
-    ){
+    ) throws IOException {
         Book book = new Book(name, author, description);
+
+        if(file!=null){
+            File uploadDir = new File(uploadPath);
+            if(!uploadDir.exists()){
+                uploadDir.mkdirs();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFilename = uuidFile + "." + file.getOriginalFilename();
+
+            file.transferTo(new File(uploadPath+"/"+resultFilename));
+
+            book.setFilename(resultFilename);
+        }
+
         bookRepo.save(book);
 
         return "redirect:/book/list";
     }
 
-    @GetMapping("{book}")
+    @GetMapping("/{book}")
     public String bookEditForm(@PathVariable Book book, Model model){
         model.addAttribute("book", book);
-        return "bookProfile";
+        return "bookEdit";
     }
 
     @PostMapping
@@ -76,6 +103,23 @@ public class BookController {
         bookRepo.save(book);
 
         return "redirect:/book/list";
+    }
+
+    @GetMapping("/download/{filename}")
+    @ResponseBody
+    public void download(
+            @PathVariable("filename") String filename,
+            HttpServletResponse response
+    ) throws IOException {
+        //response.setHeader("Content-Disposition", "attachment; filename="+ filename.replace(" ", "_"));
+        response.setHeader("Content-Transfer-Encoding", "binary");
+        response.setContentType("application/force-download");
+
+        FileInputStream inputStream = new FileInputStream(uploadPath+"/"+filename);
+
+        IOUtils.copy(inputStream, response.getOutputStream());
+
+        response.flushBuffer();
     }
 
 }
