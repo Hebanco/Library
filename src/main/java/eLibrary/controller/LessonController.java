@@ -4,7 +4,7 @@ import eLibrary.domain.Lesson;
 import eLibrary.domain.LessonSubGroup;
 import eLibrary.domain.User;
 import eLibrary.repos.LessonRepo;
-import eLibrary.repos.UserRepo;
+import eLibrary.repos.SubGroupRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class LessonController {
 
     private final LessonRepo lessonRepo;
+    private final SubGroupRepo subGroupRepo;
 
-    public LessonController(LessonRepo lessonRepo) {
+    public LessonController(LessonRepo lessonRepo, SubGroupRepo subGroupRepo) {
         this.lessonRepo = lessonRepo;
+        this.subGroupRepo = subGroupRepo;
     }
 
     @GetMapping("/new")
@@ -58,17 +60,19 @@ public class LessonController {
         return "lessonList";
     }
 
-//    @GetMapping("/{lesson}/addSubGroup")
-//    public String newSubGroup(
-//            Model model,
-//            @PathVariable Lesson lesson
-//            ){
-//        LessonSubGroup subGroup = new LessonSubGroup();
-//        lesson.getSubGroups().add(subGroup);
-//        lessonRepo.save(lesson);
-//
-//        return "redirect:/subGroup/"+subGroup.getId();
-//    }
+    @PostMapping("/{lesson}/addSubGroup")
+    public String newSubGroup(
+            Model model,
+            @PathVariable Lesson lesson,
+            @RequestParam String name
+    ){
+        LessonSubGroup subGroup = new LessonSubGroup(name);
+        subGroupRepo.save(subGroup);
+
+        lesson.getSubGroups().add(subGroup);
+        lessonRepo.save(lesson);
+        return "redirect:/lesson/"+lesson.getId();
+    }
 
     @GetMapping("{lesson}")
     public String lessonEdit(

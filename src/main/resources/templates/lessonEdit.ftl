@@ -1,13 +1,14 @@
 <#import "parts/common.ftl" as c>
+    <#import "parts/newSubGroup.ftl" as nsg>
+
 <@c.page>
     Lesson editor
 
     <label>${lesson.name}</label>
 
-    <a href="/lesson/${lesson.id}/addSubGroup">New SubGroup</a>
-
     <table>
         <tbody>
+        <@nsg.newSubGroup "${lesson.id}"/>
         <#list subGroups as subGroup>
             <tr>
                 <td>${subGroup.name}</td>

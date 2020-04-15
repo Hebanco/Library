@@ -29,6 +29,10 @@ public class LessonSubGroup {
         groupBooks = books;
     }
 
+    public LessonSubGroup(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

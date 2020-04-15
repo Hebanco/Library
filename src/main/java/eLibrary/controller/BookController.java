@@ -111,7 +111,6 @@ public class BookController {
             @PathVariable("filename") String filename,
             HttpServletResponse response
     ) throws IOException {
-        //response.setHeader("Content-Disposition", "attachment; filename="+ filename.replace(" ", "_"));
         response.setHeader("Content-Transfer-Encoding", "binary");
         response.setContentType("application/force-download");
 
