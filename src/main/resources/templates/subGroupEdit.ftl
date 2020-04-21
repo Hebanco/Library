@@ -2,7 +2,7 @@
 <@c.page>
     <form action="/subGroup/subGroupFilter" method="post">
         <input type="text" name="filter" value="${filter}">
-        <button type="submit">Search almost work</button>
+        <button type="submit" class="btn btn-secondary">Search almost work</button>
         <input type="hidden" value="${subGroup.id}" name="subGroupId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
     </form>
@@ -41,6 +41,6 @@
         </table>
         <input type="hidden" value="${subGroup.id}" name="subGroupId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
-        <button type="submit">Save</button>
+        <button type="submit" class="btn btn-primary">Save</button>
     </form>
 </@c.page>

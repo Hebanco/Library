@@ -7,7 +7,7 @@
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <div><label> Teacher: ${teacher.username} </label></div>
         <input type="hidden" name="teacherId" value="${teacher.id}">
-        <div><input type="submit" value="Create"/></div>
+        <div><input type="submit" value="Create" class="btn btn-primary"/></div>
     </form>
 
 </@c.page>

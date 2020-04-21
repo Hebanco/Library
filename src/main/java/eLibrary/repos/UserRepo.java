@@ -12,6 +12,10 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     List<User> findByUsernameLikeIgnoreCase(String username);
 
+    @Query(value = "SELECT * from usr WHERE id IN (select user_id from user_role where roles = 'TEACHER')",
+            nativeQuery = true)
+    List<User> findTeacher();
+
     @Query(value = "SELECT * from usr WHERE id IN (select user_id from user_role where roles = 'TEACHER') AND username LIKE CONCAT('%',:username,'%')",
     nativeQuery = true)
     List<User> findTeacherByUsername(@Param("username") String username);

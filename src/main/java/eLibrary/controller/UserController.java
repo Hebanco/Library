@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
@@ -59,5 +58,11 @@ public class UserController {
         userRepo.save(user);
 
         return "redirect:/user";
+    }
+
+    @GetMapping("/teachers")
+    public String teachersList(Model model){
+        model.addAttribute("teachers",userRepo.findTeacher());
+        return "teachers";
     }
 }
