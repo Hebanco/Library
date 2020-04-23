@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -64,21 +63,7 @@ public class BookController {
     ) throws IOException {
         Book book = new Book(name, author, description);
 
-        if(file!=null){
-            File uploadDir = new File(uploadPath);
-            if(!uploadDir.exists()){
-                uploadDir.mkdirs();
-            }
-
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFilename = uuidFile + "." + file.getOriginalFilename();
-
-            file.transferTo(new File(uploadPath+"/"+resultFilename));
-
-            book.setFilename(resultFilename);
-        }
-
-        bookRepo.save(book);
+        uploadFile(book, file);
 
         return "redirect:/book/list";
     }
@@ -94,15 +79,35 @@ public class BookController {
             @RequestParam String name,
             @RequestParam String author,
             @RequestParam String description,
-            @RequestParam("bookId") Book book
-    ){
+            @RequestParam("bookId") Book book,
+            @RequestParam(required = false, defaultValue = "", name = "file") MultipartFile file
+    ) throws IOException {
         book.setName(name);
         book.setAuthor(author);
         book.setDescriptions(description);
 
-        bookRepo.save(book);
+        if(file!=null) {
+            uploadFile(book, file);
+        }
 
         return "redirect:/book/list";
+    }
+
+    private void uploadFile(Book book,MultipartFile file) throws IOException {
+
+        File uploadDir = new File(uploadPath);
+        if(!uploadDir.exists()){
+            uploadDir.mkdirs();
+        }
+
+        String uuidFile = UUID.randomUUID().toString();
+        String resultFilename = uuidFile + "." + file.getOriginalFilename();
+
+        file.transferTo(new File(uploadPath+"/"+resultFilename));
+
+        book.setFilename(resultFilename);
+
+        bookRepo.save(book);
     }
 
     @GetMapping("/download/{filename}")

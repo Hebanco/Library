@@ -1,22 +1,19 @@
 package eLibrary.controller;
 
-import eLibrary.domain.Role;
 import eLibrary.domain.User;
-import eLibrary.repos.UserRepo;
+import eLibrary.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Collections;
-
 @Controller
 public class RegistrationController {
 
-    private final UserRepo userRepo;
+    private final UserService userService;
 
-    public RegistrationController(UserRepo userRepo) {
-        this.userRepo = userRepo;
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/registration")
@@ -26,17 +23,13 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(User user, Model model){
-        User userFromDB = userRepo.findByUsername(user.getUsername());
 
-        if(userFromDB!=null){
+
+        if(!userService.addUser(user)){
             model.addAttribute("message", "User exists");
             return "registration";
         }
 
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
-        userRepo.save(user);
-
-        return "redirect:/login";
+        return "registration";
     }
 }

@@ -20,6 +20,9 @@
             </li>
 
             <#if isAdmin>
+                <li class="nav-item">
+                <a class="nav-link" href="/lesson/myLessons">My lessons <span class="sr-only">(current)</span></a>
+            </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         User
@@ -29,10 +32,17 @@
                         <a class="dropdown-item" href="/registration">Add new user</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/lesson/myLessons">My lessons <span class="sr-only">(current)</span></a>
-                </li>
 
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Book
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/book/list">Books list</a>
+                        <a class="dropdown-item" href="/book/new">Add new book</a>
+                    </div>
+                </li>
             </#if>
         </ul>
 
