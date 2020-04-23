@@ -32,32 +32,31 @@
             </#if>
         </div>
         <#if isRegisterForm>
-            <div class="mt-2">
-                <label for="inputPassword"> Password:  </label>
-                <input type="password" name="password2"
-                       class="form-control ${(password2Error??)?string('is-invalid', '')}"
-                       id = "inputPassword" placeholder="Retype password"/>
-                <#if password2Error??>
-                    <div class="invalid-feedback">
-                        ${password2Error}
-                    </div>
-                </#if>
-            </div>
 <#--            <div class="mt-2">-->
-<#--                <label for="inputEmail">Email: </label>-->
-<#--                <input type="email" name="email" value="<#if user??>${user.email}</#if>"-->
-<#--                       class="form-control ${(emailError??)?string('is-invalid', '')}"-->
-<#--                       id = "inputEmail" placeholder="some@some.com"/>-->
-<#--                <#if emailError??>-->
+<#--                <label for="inputPassword"> Password:  </label>-->
+<#--                <input type="password" name="password2"-->
+<#--                       class="form-control ${(password2Error??)?string('is-invalid', '')}"-->
+<#--                       id = "inputPassword" placeholder="Retype password"/>-->
+<#--                <#if password2Error??>-->
 <#--                    <div class="invalid-feedback">-->
-<#--                        ${emailError}-->
+<#--                        ${password2Error}-->
 <#--                    </div>-->
 <#--                </#if>-->
 <#--            </div>-->
+            <div class="mt-2">
+                <label for="inputEmail">Email: </label>
+                <input type="email" name="email"
+                       class="form-control ${(emailError??)?string('is-invalid', '')}"
+                       id = "inputEmail" placeholder="some@some.com"/>
+                <#if emailError??>
+                    <div class="invalid-feedback">
+                        ${emailError}
+                    </div>
+                </#if>
+            </div>
         </#if>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <div class="mx-auto" style="width: 15%"><button type="submit" class="btn btn-primary mt-4"><#if isRegisterForm>Create <#else >Sing In</#if></button></div>
-<#--        <div class="mx-auto" style="width: 18%"><#if !isRegisterForm><a href="/registration">Add new user</a></#if></div>-->
     </form>
 </#macro>
 

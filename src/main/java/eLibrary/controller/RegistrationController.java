@@ -5,7 +5,11 @@ import eLibrary.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.UUID;
 
 @Controller
 public class RegistrationController {
@@ -24,12 +28,63 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addUser(User user, Model model){
 
-
         if(!userService.addUser(user)){
             model.addAttribute("message", "User exists");
             return "registration";
         }
 
         return "registration";
+    }
+
+    @GetMapping("/recover")
+    public String passwordRecover(Model model){
+        return "passwordRecoverEmail";
+    }
+
+    @PostMapping("/recover")
+    public String sendEmail(
+            Model model,
+            @RequestParam("email") String email
+            ){
+        if(!email.isEmpty()) {
+            User user = userService.findByEmail(email);
+            user.setActivationCode(UUID.randomUUID().toString());
+            userService.sendMail(user);
+        }
+
+        return "passwordRecoverEmail";
+    }
+
+    @GetMapping("/recover/{code}")
+    public String changePassword(
+            Model model,
+            @PathVariable String code
+    ){
+        User user = userService.findByActivationCode(code);
+        if(user!=null) {
+            model.addAttribute("username", user.getUsername());
+        }
+        else{
+            model.addAttribute("message", "Activation code not found");
+        }
+        return "passwordChange";
+    }
+
+    @PostMapping("/passwordChange")
+    public String savePassword(
+            Model model,
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            @RequestParam("password2") String password2
+            ){
+        User user = userService.findByUsername(username);
+        if(password!=password2){
+            model.addAttribute("message", "Passwords are different");
+            return "registration";
+        }
+        user.setPassword(password);
+        user.setActivationCode(null);
+        userService.saveUser(user);
+        return "redirect:/login";
     }
 }

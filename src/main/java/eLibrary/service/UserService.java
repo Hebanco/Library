@@ -15,9 +15,11 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
 
     private final UserRepo userRepo;
+    private final MailSender mailSender;
 
-    public UserService(UserRepo userRepo) {
+    public UserService(UserRepo userRepo, MailSender mailSender) {
         this.userRepo = userRepo;
+        this.mailSender = mailSender;
     }
 
     public void saveUser(User user, String username, Map<String, String> form) {
@@ -62,5 +64,32 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
 
         return true;
+    }
+
+    public User findByEmail(String email) {
+        return userRepo.findByEmail(email);
+    }
+
+    public void sendMail(User user) {
+        String message = String.format(
+                "Hello, %s! \n"+
+                        "Link for password recover http://localhost8080/recover/%s",
+                user.getUsername(),
+                user.getActivationCode()
+        );
+
+        mailSender.send(user.getEmail(), "Password recover", message);
+    }
+
+    public User findByActivationCode(String code) {
+        return userRepo.findByActivationCode(code);
+    }
+
+    public User findByUsername(String username) {
+        return userRepo.findByUsername(username);
+    }
+
+    public void saveUser(User user) {
+        userRepo.save(user);
     }
 }
