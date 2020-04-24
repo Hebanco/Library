@@ -19,6 +19,10 @@
                 <a class="nav-link" href="/user/teachers">Teachers <span class="sr-only">(current)</span></a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="/user/myProfile">My profile <span class="sr-only">(current)</span></a>
+            </li>
+
             <#if isAdmin>
                 <li class="nav-item">
                 <a class="nav-link" href="/lesson/myLessons">My lessons <span class="sr-only">(current)</span></a>

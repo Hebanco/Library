@@ -4,6 +4,7 @@ import eLibrary.domain.Role;
 import eLibrary.domain.User;
 import eLibrary.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +49,38 @@ public class UserController {
     public String teachersList(Model model){
         model.addAttribute("teachers",userService.findTeacher());
         return "teachers";
+    }
+
+    @GetMapping("/myProfile")
+    public String myProfile(
+            Model model,
+            @AuthenticationPrincipal User user
+    ){
+        model.addAttribute("user", user);
+        return "userProfile";
+    }
+
+    @GetMapping("/profile/{user}")
+    public String userProfile(
+            Model model,
+            @PathVariable User user
+    ){
+        model.addAttribute("user", user);
+        return "userProfile";
+    }
+
+    @PostMapping("/profileSave")
+    public String saveProfile(
+        Model model,
+        @RequestParam("userId") User user,
+        @RequestParam(required = false, defaultValue = "", name = "username") String username,
+        @RequestParam String password,
+        @RequestParam String email,
+        @RequestHeader String referer
+    ){
+        userService.updateProfile(user, username, password, email);
+        model.addAttribute("user", user);
+        model.addAttribute("message", "Save successfull");
+        return "userProfile";
     }
 }
