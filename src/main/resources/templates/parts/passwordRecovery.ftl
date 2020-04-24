@@ -8,7 +8,7 @@
 
 
 <#macro passwordChange username>
-    <form action="/recover" method="post">
+    <form action="/recover/newPassword" method="post">
         <div><label> Username : ${username} </label></div>
         <div>
             <label for="inputPassword"> Password:  </label>

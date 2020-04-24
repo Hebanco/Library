@@ -70,7 +70,7 @@ public class RegistrationController {
         return "passwordChange";
     }
 
-    @PostMapping("/passwordChange")
+    @PostMapping("/recover/newPassword")
     public String savePassword(
             Model model,
             @RequestParam("username") String username,
@@ -78,9 +78,9 @@ public class RegistrationController {
             @RequestParam("password2") String password2
             ){
         User user = userService.findByUsername(username);
-        if(password!=password2){
+        if(!password.equals(password2)){
             model.addAttribute("message", "Passwords are different");
-            return "registration";
+            return "passwordChange";
         }
         user.setPassword(password);
         user.setActivationCode(null);

@@ -73,7 +73,7 @@ public class UserService implements UserDetailsService {
     public void sendMail(User user) {
         String message = String.format(
                 "Hello, %s! \n"+
-                        "Link for password recover http://localhost8080/recover/%s",
+                        "Link for password recover http://localhost:8080/recover/%s",
                 user.getUsername(),
                 user.getActivationCode()
         );
