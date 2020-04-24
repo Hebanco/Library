@@ -55,7 +55,7 @@
                 </#if>
             </div>
         </#if>
-        <a href="/recover">Password recovery</a>
+        <#if !isRegisterForm> <a href="/recover">Password recovery</a></#if>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <div class="mx-auto" style="width: 15%"><button type="submit" class="btn btn-primary mt-4"><#if isRegisterForm>Create <#else >Sing In</#if></button></div>
     </form>

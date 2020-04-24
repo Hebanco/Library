@@ -6,6 +6,7 @@ import eLibrary.domain.User;
 import eLibrary.repos.LessonRepo;
 import eLibrary.repos.SubGroupRepo;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -66,10 +67,9 @@ public class LessonController {
     @GetMapping("/myLessons")
     public String userLesson(
             Model model,
-            Authentication authentication
+            @AuthenticationPrincipal User user
     ){
-        User currentUser = (User) authentication.getPrincipal();
-        model.addAttribute("lessons", lessonRepo.findByTeacher(currentUser));
+        model.addAttribute("lessons", lessonRepo.findByTeacher(user));
         return "lessonList";
     }
 
