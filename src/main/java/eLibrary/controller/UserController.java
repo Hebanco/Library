@@ -13,7 +13,6 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
-@PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     private final UserService userService;
 
@@ -21,12 +20,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public String userList(Model model){
         model.addAttribute("users", userService.findAll());
         return "userList";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, Model model){
         model.addAttribute("user", user);
@@ -34,6 +35,7 @@ public class UserController {
         return "userEdit";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public String userSave(
             @RequestParam String username,
@@ -60,6 +62,7 @@ public class UserController {
         return "userProfile";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/profile/{user}")
     public String userProfile(
             Model model,
@@ -75,12 +78,11 @@ public class UserController {
         @RequestParam("userId") User user,
         @RequestParam(required = false, defaultValue = "", name = "username") String username,
         @RequestParam String password,
-        @RequestParam String email,
-        @RequestHeader String referer
+        @RequestParam String email
     ){
         userService.updateProfile(user, username, password, email);
         model.addAttribute("user", user);
-        model.addAttribute("message", "Save successfull");
+        model.addAttribute("message", "Save successfully");
         return "userProfile";
     }
 }

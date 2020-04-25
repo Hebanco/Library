@@ -6,6 +6,7 @@ import eLibrary.repos.UserRepo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -17,10 +18,12 @@ public class UserService implements UserDetailsService {
 
     private final UserRepo userRepo;
     private final MailSender mailSender;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepo userRepo, MailSender mailSender) {
+    public UserService(UserRepo userRepo, MailSender mailSender, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.mailSender = mailSender;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void saveUser(User user, String username, Map<String, String> form) {
@@ -62,6 +65,7 @@ public class UserService implements UserDetailsService {
         }
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
 
         return true;
@@ -100,7 +104,7 @@ public class UserService implements UserDetailsService {
         }
 
         if(!StringUtils.isEmpty(password) && !password.equals(user.getPassword())){
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(password));
         }
 
         if(!StringUtils.isEmpty(email) && !email.equals(user.getEmail())){

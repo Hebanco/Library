@@ -33,7 +33,7 @@ public class RegistrationController {
             return "registration";
         }
 
-        return "registration";
+        return "redirect:/registration";
     }
 
     @GetMapping("/recover")

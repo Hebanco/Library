@@ -2,7 +2,7 @@ insert into usr (id, username, password, active)
 values(
           1,
           'admin',
-          '1',
+          '$2a$08$GH8a/9WeKc7mdnEJ/J7tFOb3kQxV4GMH3kjBZQINwKMj0cxD3YsZi',
           true
       );
 
