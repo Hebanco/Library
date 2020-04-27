@@ -1,6 +1,7 @@
 package eLibrary.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Need Lesson Name")
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)

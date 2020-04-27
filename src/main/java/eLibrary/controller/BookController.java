@@ -6,13 +6,16 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -55,17 +58,24 @@ public class BookController {
 
     @PostMapping("/new")
     public String add(
-            @RequestParam String name,
-            @RequestParam String author,
-            @RequestParam String description,
+            @Valid Book book,
+            BindingResult bindingResult,
             @RequestParam("file") MultipartFile file,
             Model model
     ) throws IOException {
-        Book book = new Book(name, author, description);
+        if(bindingResult.hasErrors()){
+            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("book", book);
+        }else {
 
-        uploadFile(book, file);
+            uploadFile(book, file);
 
-        return "redirect:/book/list";
+            model.addAttribute("book", null);
+
+            bookRepo.save(book);
+        }
+        return "bookCreate";
     }
 
     @GetMapping("/{book}")
@@ -106,8 +116,6 @@ public class BookController {
         file.transferTo(new File(uploadPath+"/"+resultFilename));
 
         book.setFilename(resultFilename);
-
-        bookRepo.save(book);
     }
 
     @GetMapping("/download/{filename}")

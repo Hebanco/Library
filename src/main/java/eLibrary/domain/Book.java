@@ -1,9 +1,12 @@
 package eLibrary.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Book {
@@ -12,8 +15,11 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Please fill the Book name")
     private String name;
     private String author;
+
+    @Length(max = 2048, message = "Descriptions too long")
     private String descriptions;
 
     private String filename;

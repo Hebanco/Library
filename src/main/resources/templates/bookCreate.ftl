@@ -1,9 +1,24 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
     <form method="post" action="/book/new" enctype="multipart/form-data">
-        <input type="text" name="name" placeholder="Название">
-        <input type="text" name="author" placeholder="Автор">
-        <input type="text" name="description" placeholder="Описание" >
+        <input type="text" class="form-control ${(nameError??)?string('is-invalid', '')}"
+               value="<#if book??>${book.name}</#if>" name="name" placeholder="Название">
+        <#if nameError??>
+            <div class="invalid-feedback">
+                ${nameError}
+            </div>
+        </#if>
+        <input type="text" class="form-control" name="author" placeholder="Автор">
+        <div class="invalid-feedback">
+            Please choose a username.
+        </div>
+        <input type="text" class="form-control ${(descriptionError??)?string('is-invalid', '')}"
+               name="description" placeholder="Описание" >
+        <#if descriptionError??>
+            <div class="invalid-feedback">
+                ${descriptionError}
+            </div>
+        </#if>
         <div>
             <input type="file" name="file">
         </div>

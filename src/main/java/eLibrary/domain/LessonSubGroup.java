@@ -1,6 +1,7 @@
 package eLibrary.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ public class LessonSubGroup {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Need SubGroup Name")
     String name;
 
     @ManyToMany(fetch = FetchType.LAZY)
