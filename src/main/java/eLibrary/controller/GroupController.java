@@ -7,6 +7,7 @@ import eLibrary.repos.SubGroupRepo;
 import eLibrary.repos.UserRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -23,23 +24,23 @@ public class GroupController {
         this.bookRepo = bookRepo;
     }
 
-    @GetMapping("/new")
-    public String newGroup(Model model){
-        return "subGroupCreate";
-    }
-
-    @PostMapping("/new")
-    public String newGroup(
-            Model model,
-            @RequestParam String name
-    ){
-        LessonSubGroup subGroup = new LessonSubGroup();
-        subGroup.setName(name);
-
-        subGroupRepo.save(subGroup);
-
-        return "redirect:/subGroup/new";
-    }
+//    @GetMapping("/new")
+//    public String newGroup(Model model){
+//        return "subGroupCreate";
+//    }
+//
+//    @PostMapping("/new")
+//    public String newGroup(
+//            Model model,
+//            @RequestParam String name
+//    ){
+//        LessonSubGroup subGroup = new LessonSubGroup();
+//        subGroup.setName(name);
+//
+//        subGroupRepo.save(subGroup);
+//
+//        return "redirect:/subGroup/new";
+//    }
 
     @GetMapping("{subGroup}")
     public String subGroupEditForm(
@@ -65,13 +66,18 @@ public class GroupController {
     @PostMapping
     public String subGroupSave(
             @RequestParam String name,
-            @RequestParam("subGroupId") LessonSubGroup subGroup
+            @RequestParam("subGroupId") LessonSubGroup subGroup,
+            Model model
     ){
-        subGroup.setName(name);
+        if (!StringUtils.isEmpty(name)) {
+            subGroup.setName(name);
 
-        subGroupRepo.save(subGroup);
+            subGroupRepo.save(subGroup);
+        }else{
+            model.addAttribute("nameError","Name is Empty");
+        }
 
-        return "redirect:/book/list";
+        return "subGroupEdit";
     }
 
     @GetMapping("/delete/{subGroup}/{book}")

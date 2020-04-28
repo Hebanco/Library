@@ -9,9 +9,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/lesson")
@@ -36,12 +39,17 @@ public class LessonController {
 
     @PostMapping("/new")
     public String saveLesson(
+            @Valid Lesson lesson,
+            BindingResult bindingResult,
             Model model,
-            @RequestParam String name,
             @RequestParam(name = "teacherId") User teacher
     ){
-        Lesson lesson = new Lesson();
-        lesson.setName(name);
+        if(bindingResult.hasErrors()){
+            Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
+            model.mergeAttributes(errors);
+            model.addAttribute("teacher", teacher);
+            return "lessonCreate";
+        }
         lesson.setTeacher(teacher);
 
         lessonRepo.save(lesson);
@@ -73,13 +81,20 @@ public class LessonController {
         return "lessonList";
     }
 
-    @PostMapping("/{lesson}/addSubGroup")
+    @PostMapping("/{lesson}")
     public String newSubGroup(
+            @Valid LessonSubGroup subGroup,
+            BindingResult bindingResult,
             Model model,
-            @PathVariable Lesson lesson,
-            @RequestParam String name
+            @PathVariable Lesson lesson
     ){
-        LessonSubGroup subGroup = new LessonSubGroup(name);
+        if(bindingResult.hasErrors()){
+            Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
+            model.mergeAttributes(errors);
+            model.addAttribute("lesson", lesson);
+            model.addAttribute("subGroups", lesson.getSubGroups());
+            return "lessonEdit";
+        }
         subGroupRepo.save(subGroup);
 
         lesson.getSubGroups().add(subGroup);

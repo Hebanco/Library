@@ -1,4 +1,5 @@
 <#import "parts/common.ftl" as c>
+    <#include "parts/security.ftl">
 <@c.page>
     List of users
 
@@ -16,7 +17,7 @@
             <td>${user.username}</td>
             <td><#list user.roles as role>${role}<#sep>, </#list> </td>
             <td><a href="/user/${user.id}">Roles edit</a> </td>
-            <#if user.isAdmin()><td><a href="/user/profile/${user.id}">Profile edit</a> </td></#if>
+            <#if isAdmin><td><a href="/user/profile/${user.id}">Profile edit</a> </td></#if>
         </tr>
     </#list>
     </tbody>

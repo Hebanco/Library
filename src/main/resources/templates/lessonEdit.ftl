@@ -6,7 +6,11 @@
 
     <table>
         <tbody>
-        <@nsg.newSubGroup "${lesson.id}"/>
+         <#if nameError??>
+             <@nsg.newSubGroup "${lesson.id}" nameError/>
+         <#else>
+             <@nsg.newSubGroup "${lesson.id}"/>
+         </#if>
         <#list subGroups as subGroup>
             <tr>
                 <td><a href="/subGroup/${subGroup.id}">${lesson.name}</a> </td>
@@ -19,6 +23,6 @@
     </table>
 
     <input type="hidden" value="${lesson.id}" name="userId">
-    <button type="submit" class="btn btn-primary">Save</button>
+<#--    <button type="submit" class="btn btn-primary">Save</button>-->
 
 </@c.page>

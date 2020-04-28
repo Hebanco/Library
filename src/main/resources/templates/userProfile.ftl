@@ -1,9 +1,10 @@
 <#import "parts/common.ftl" as c>
+<#import "parts/security.ftl">
 <@c.page>
 
     ${message?ifExists}
     <form action="/user/profileSave" method="post">
-        <#if !user.isAdmin()>
+        <#if isAdmin>
             <h5>${user.username}</h5>
         <#else>
             <input type="text" class="form-control mb-5" name="username" id = "inputUsername" placeholder="Username" value="${user.username!""}"/>

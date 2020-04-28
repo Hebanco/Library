@@ -29,12 +29,16 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(@Valid User user, BindingResult bindingResult, Model model){
+    public String addUser(
+            @Valid User user,
+            BindingResult bindingResult,
+            Model model
+    ){
 
         if(bindingResult.hasErrors()){
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errors);
-            model.addAttribute("newUser", user);
+            model.addAttribute("user", user);
             return "registration";
         }
 

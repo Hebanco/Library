@@ -1,17 +1,9 @@
-<#--<#macro login path>-->
-<#--    <form action=${path} method="post">-->
-<#--        <div><label> User Name : <input type="text" name="username"/> </label></div>-->
-<#--        <div><label> Password: <input type="password" name="password"/> </label></div>-->
-<#--        <input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
-<#--        <div><input type="submit" class="btn btn-primary" value="Sign In"/></div>-->
-<#--    </form>-->
-
-
+<#include "security.ftl">
 <#macro login path isRegisterForm>
     <form action="${path}" method="post">
         <div class="form-group">
             <label for="inputName"> User Name : </label>
-            <input type="text" name="username" value="<#if newUser??>${newUser.username}</#if>"
+            <input type="text" name="username" value="<#if user??>${user.username}</#if>"
                    class="form-control ${(usernameError??)?string('is-invalid', '')}"
                    id = "inputName" placeholder="User name"/>
             <#if usernameError??>
@@ -45,7 +37,7 @@
 <#--            </div>-->
             <div class="mt-2">
                 <label for="inputEmail">Email: </label>
-                <input type="email" name="email" value="<#if newUser??>${newUser.email}</#if>"
+                <input type="email" name="email" value="<#if user??>${user.email}</#if>"
                        class="form-control ${(emailError??)?string('is-invalid', '')}"
                        id = "inputEmail" placeholder="some@some.com"/>
                 <#if emailError??>
@@ -61,10 +53,10 @@
     </form>
 </#macro>
 
-<#include "security.ftl">
+
 <#macro logout>
     <form action="/logout" method="post">
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <button type="submit" class="btn btn-primary"><#if user??>Sing Out <#else>Log in</#if></button>
+        <button type="submit" class="btn btn-primary"><#if currentUser??>Sing Out <#else>Log in</#if></button>
     </form>
 </#macro>
