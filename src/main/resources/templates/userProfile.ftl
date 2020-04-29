@@ -1,5 +1,5 @@
 <#import "parts/common.ftl" as c>
-<#import "parts/security.ftl">
+<#include "parts/security.ftl">
 <@c.page>
 
     ${message?ifExists}
