@@ -9,14 +9,16 @@
             </div>
         </#if>
         <input type="text" class="form-control" name="author" placeholder="Автор">
-        <div class="invalid-feedback">
-            Please choose a username.
-        </div>
-        <input type="text" class="form-control ${(descriptionError??)?string('is-invalid', '')}"
-               name="description" placeholder="Описание" >
-        <#if descriptionError??>
+        <#if authorError??>
             <div class="invalid-feedback">
-                ${descriptionError}
+                ${authorError}
+            </div>
+        </#if>
+        <input type="text" class="form-control ${(descriptionError??)?string('is-invalid', '')}"
+               name="descriptions" placeholder="Описание" >
+        <#if descriptionsError??>
+            <div class="invalid-feedback">
+                ${descriptionsError}
             </div>
         </#if>
         <div>

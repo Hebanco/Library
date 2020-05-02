@@ -17,6 +17,7 @@ public class Book {
 
     @NotBlank(message = "Please fill the Book name")
     private String name;
+    @NotBlank(message = "Please fill the Author")
     private String author;
 
     @Length(max = 2048, message = "Descriptions too long")

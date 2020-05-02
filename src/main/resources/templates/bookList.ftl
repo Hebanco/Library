@@ -16,7 +16,7 @@
                 <span>#{book.id}</span>
                 <span>${book.name}</span>
                 <span>${book.author}</span>
-                <a>${book.descriptions}</a>
+                <#if book.descriptions??><a>${book.descriptions}</a></#if>
                 <a href="/book/${book.id}">Edit</a>
             </div>
         <#else>
