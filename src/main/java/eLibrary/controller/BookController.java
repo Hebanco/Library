@@ -4,6 +4,7 @@ import eLibrary.domain.Book;
 import eLibrary.repos.BookRepo;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +32,7 @@ public class BookController {
         this.bookRepo = bookRepo;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/list")
     public String main(
             Model model,
@@ -51,6 +53,7 @@ public class BookController {
         return "bookList";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/new")
     public String addBook(Model model){
         return "bookCreate";

@@ -5,6 +5,7 @@ import eLibrary.domain.LessonSubGroup;
 import eLibrary.domain.User;
 import eLibrary.repos.LessonRepo;
 import eLibrary.repos.SubGroupRepo;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ public class LessonController {
         this.subGroupRepo = subGroupRepo;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/new")
     public String newLesson(
             Model model,
@@ -72,6 +74,7 @@ public class LessonController {
         return "lessonList";
     }
 
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
     @GetMapping("/myLessons")
     public String userLesson(
             Model model,
@@ -81,6 +84,7 @@ public class LessonController {
         return "lessonList";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @PostMapping("/{lesson}")
     public String newSubGroup(
             @Valid LessonSubGroup subGroup,
@@ -102,6 +106,7 @@ public class LessonController {
         return "redirect:/lesson/"+lesson.getId();
     }
 
+    //@PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("{lesson}")
     public String lessonEdit(
             Model model,
@@ -113,6 +118,7 @@ public class LessonController {
         return "lessonEdit";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/{lesson}/delete/{subGroup}")
     public String deleteSubGroup(
             Model model,

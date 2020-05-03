@@ -5,6 +5,7 @@ import eLibrary.domain.LessonSubGroup;
 import eLibrary.repos.BookRepo;
 import eLibrary.repos.SubGroupRepo;
 import eLibrary.repos.UserRepo;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -42,6 +43,7 @@ public class GroupController {
 //        return "redirect:/subGroup/new";
 //    }
 
+
     @GetMapping("{subGroup}")
     public String subGroupEditForm(
             @PathVariable LessonSubGroup subGroup,
@@ -63,6 +65,7 @@ public class GroupController {
         return "subGroupEdit";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @PostMapping
     public String subGroupSave(
             @RequestParam String name,
@@ -80,6 +83,7 @@ public class GroupController {
         return "subGroupEdit";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/delete/{subGroup}/{book}")
     public String deleteBook(
             Model model,
@@ -92,6 +96,7 @@ public class GroupController {
         return "redirect:/subGroup/"+subGroup.getId();
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/add/{subGroup}/{book}")
     public String addBook(
             Model model,

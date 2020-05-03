@@ -2,6 +2,7 @@ package eLibrary.controller;
 
 import eLibrary.domain.User;
 import eLibrary.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +24,7 @@ public class RegistrationController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/registration")
     public String registration(){
         return "registration";
