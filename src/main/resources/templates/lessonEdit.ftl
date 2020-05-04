@@ -1,21 +1,27 @@
 <#import "parts/common.ftl" as c>
-    <#import "parts/newSubGroup.ftl" as nsg>
+<#import "parts/newSubGroup.ftl" as nsg>
+<#include "parts/security.ftl">
 
 <@c.page>
-    <label>${lesson.name}</label>
+    <h4>${lesson.name}</h4>
 
     <table>
         <tbody>
-         <#if nameError??>
-             <@nsg.newSubGroup "${lesson.id}" nameError/>
-         <#else>
-             <@nsg.newSubGroup "${lesson.id}"/>
-         </#if>
+        <#if isTeacher || isAdmin>
+            <#if nameError??>
+                <@nsg.newSubGroup "${lesson.id}" nameError/>
+            <#else>
+                <@nsg.newSubGroup "${lesson.id}"/>
+            </#if>
+
+        </#if>
+        <h5>Список подгрупп</h5>
         <#list subGroups as subGroup>
             <tr>
-                <td><a href="/subGroup/${subGroup.id}">${lesson.name}</a> </td>
-<#--                <td><a href="/subGroup/${subGroup.id}"/>Edit</td>-->
-                <td><a href="/lesson/${lesson.id}/delete/${subGroup.id}"/>Удалить</td>
+                <td><a href="/subGroup/${subGroup.id}">${subGroup.name}</a> </td>
+                <#if isTeacher || isAdmin>
+                    <td><a href="/lesson/${lesson.id}/delete/${subGroup.id}"/>Удалить</td>
+                </#if>
 
             </tr>
         </#list>
@@ -23,6 +29,5 @@
     </table>
 
     <input type="hidden" value="${lesson.id}" name="userId">
-<#--    <button type="submit" class="btn btn-primary">Save</button>-->
 
 </@c.page>

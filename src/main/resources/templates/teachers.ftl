@@ -1,6 +1,7 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
 
+    <h5>Преподаватели</h5>
     <#list teachers as teacher>
 
         <div>

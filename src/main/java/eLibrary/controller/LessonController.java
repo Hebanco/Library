@@ -106,7 +106,6 @@ public class LessonController {
         return "redirect:/lesson/"+lesson.getId();
     }
 
-    //@PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("{lesson}")
     public String lessonEdit(
             Model model,

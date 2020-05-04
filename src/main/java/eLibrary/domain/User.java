@@ -1,5 +1,6 @@
 package eLibrary.domain;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -22,6 +23,7 @@ public class User implements UserDetails {
     private String password;
     private boolean active;
     @NotBlank(message = "Введите ФИО")
+    @Length(max = 255, message = "ФИО слишком длинное")
     private String fio;
 
     @Email(message = "Email не коректен")

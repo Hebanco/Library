@@ -24,17 +24,17 @@
             </#if>
         </div>
         <#if isRegisterForm>
-<#--            <div class="mt-2">-->
-<#--                <label for="inputPassword"> Password:  </label>-->
-<#--                <input type="password" name="password2"-->
-<#--                       class="form-control ${(password2Error??)?string('is-invalid', '')}"-->
-<#--                       id = "inputPassword" placeholder="Retype password"/>-->
-<#--                <#if password2Error??>-->
-<#--                    <div class="invalid-feedback">-->
-<#--                        ${password2Error}-->
-<#--                    </div>-->
-<#--                </#if>-->
-<#--            </div>-->
+            <div class="mt-2">
+                <label for="inputFIO"> ФИО:  </label>
+                <input type="text" name="fio"
+                       class="form-control ${(fioError??)?string('is-invalid', '')}"
+                       id = "inputFIO" placeholder="ФИО"/>
+                <#if fioError??>
+                    <div class="invalid-feedback">
+                        ${fioError}
+                    </div>
+                </#if>
+            </div>
             <div class="mt-2">
                 <label for="inputEmail">Почта </label>
                 <input type="email" name="email" value="<#if user??>${user.email}</#if>"
