@@ -16,13 +16,10 @@
                 ${authorError}
             </div>
         </#if>
-        <input type="text" class="form-control mt-3 ${(descriptionsError??)?string('is-invalid', '')}"
-               name="descriptions" placeholder="Описание" >
-        <#if descriptionsError??>
-            <div class="invalid-feedback">
-                ${descriptionsError}
-            </div>
-        </#if>
+        <div><label>Описание:</label></div>
+        <div>
+            <textarea name="descriptions" class="mt-3" maxlength="2048" cols="100%"></textarea>
+        </div>
         <div>
             <input class="mt-3" type="file" name="file">
         </div>
