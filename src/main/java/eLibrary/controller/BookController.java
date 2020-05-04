@@ -72,7 +72,9 @@ public class BookController {
             model.addAttribute("book", book);
         }else {
 
-            uploadFile(book, file);
+            if(file.getBytes().length>0) {
+                uploadFile(book, file);
+            }
 
             model.addAttribute("book", null);
 
@@ -99,7 +101,7 @@ public class BookController {
         book.setAuthor(author);
         book.setDescriptions(description);
 
-        if(file!=null) {
+        if(file.getBytes().length>0) {
             uploadFile(book, file);
         }
 
@@ -108,17 +110,19 @@ public class BookController {
 
     private void uploadFile(Book book,MultipartFile file) throws IOException {
 
+
         File uploadDir = new File(uploadPath);
-        if(!uploadDir.exists()){
+        if (!uploadDir.exists()) {
             uploadDir.mkdirs();
         }
 
         String uuidFile = UUID.randomUUID().toString();
         String resultFilename = uuidFile + "." + file.getOriginalFilename();
 
-        file.transferTo(new File(uploadPath+"/"+resultFilename));
+        file.transferTo(new File(uploadPath + "/" + resultFilename));
 
         book.setFilename(resultFilename);
+
     }
 
     @GetMapping("/download/{filename}")
