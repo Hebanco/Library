@@ -1,10 +1,8 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
-    <form action="/subGroup/subGroupFilter" method="post">
+    <form action="/subGroup/${subGroup.id}" method="get">
         <input type="text" name="filter" value="${filter}">
         <button type="submit" class="btn btn-secondary">Искать</button>
-        <input type="hidden" value="${subGroup.id}" name="subGroupId">
-        <input type="hidden" value="${_csrf.token}" name="_csrf">
     </form>
 
     <form action="/subGroup" method="post">

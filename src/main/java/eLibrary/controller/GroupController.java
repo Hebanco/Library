@@ -25,25 +25,6 @@ public class GroupController {
         this.bookRepo = bookRepo;
     }
 
-//    @GetMapping("/new")
-//    public String newGroup(Model model){
-//        return "subGroupCreate";
-//    }
-//
-//    @PostMapping("/new")
-//    public String newGroup(
-//            Model model,
-//            @RequestParam String name
-//    ){
-//        LessonSubGroup subGroup = new LessonSubGroup();
-//        subGroup.setName(name);
-//
-//        subGroupRepo.save(subGroup);
-//
-//        return "redirect:/subGroup/new";
-//    }
-
-
     @GetMapping("{subGroup}")
     public String subGroupEditForm(
             @PathVariable LessonSubGroup subGroup,
@@ -107,15 +88,5 @@ public class GroupController {
         subGroupRepo.save(subGroup);
 
         return "redirect:/subGroup/"+subGroup.getId();
-    }
-
-    @PostMapping("subGroupFilter")
-    public String subGroupFilter(
-            Model model,
-            @RequestParam("subGroupId") LessonSubGroup subGroup,
-            @RequestParam String filter
-    ){
-        String s = "redirect:/subGroup/"+subGroup.getId()+"?filter="+filter;
-        return s;
     }
 }

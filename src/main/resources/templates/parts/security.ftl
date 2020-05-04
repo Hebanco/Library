@@ -15,6 +15,7 @@ know = Session.SPRING_SECURITY_CONTEXT??
     <#assign
     name = "anon"
     isAdmin = false
+    isTeacher = false
     currentUserId = -1
     >
 </#if>
