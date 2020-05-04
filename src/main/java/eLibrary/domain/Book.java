@@ -15,12 +15,12 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Please fill the Book name")
+    @NotBlank(message = "Введите название книги")
     private String name;
-    @NotBlank(message = "Please fill the Author")
+    @NotBlank(message = "Введите автора")
     private String author;
 
-    @Length(max = 2048, message = "Descriptions too long")
+    @Length(max = 2048, message = "Описание слишком длинное")
     private String descriptions;
 
     private String filename;

@@ -12,7 +12,7 @@ public class LessonSubGroup {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Need SubGroup Name")
+    @NotBlank(message = "Введите название подгруппы")
     String name;
 
     @ManyToMany(fetch = FetchType.LAZY)

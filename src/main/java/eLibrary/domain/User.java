@@ -16,14 +16,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Empty username")
+    @NotBlank(message = "Введите логин")
     private String username;
-    @NotBlank(message = "Empty password")
+    @NotBlank(message = "Введите пароль")
     private String password;
     private boolean active;
+    @NotBlank(message = "Введите ФИО")
+    private String fio;
 
-    @Email(message = "Email not correct")
-    @NotBlank(message = "Empty email")
+    @Email(message = "Email не коректен")
+    @NotBlank(message = "Введите почту")
     private String email;
     private String activationCode;
 
@@ -118,5 +120,13 @@ public class User implements UserDetails {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
+    }
+
+    public String getFio() {
+        return fio;
+    }
+
+    public void setFio(String fio) {
+        this.fio = fio;
     }
 }

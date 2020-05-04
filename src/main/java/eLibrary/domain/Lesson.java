@@ -11,7 +11,7 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Need Lesson Name")
+    @NotBlank(message = "Введите название урока")
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)

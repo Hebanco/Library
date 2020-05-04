@@ -2,7 +2,7 @@
 <@c.page>
     <form action="/subGroup/subGroupFilter" method="post">
         <input type="text" name="filter" value="${filter}">
-        <button type="submit" class="btn btn-secondary">Search almost work</button>
+        <button type="submit" class="btn btn-secondary">Искать</button>
         <input type="hidden" value="${subGroup.id}" name="subGroupId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
     </form>
@@ -15,11 +15,11 @@
                 <tr>
                     <td>${book.name}</td>
                     <td>${book.author}</td>
-                    <td><a href="/book/${book.id}">book profile</a> </td>
-                    <td><a href="/subGroup/delete/${subGroup.id}/${book.id}">Delete</a> </td>
+                    <td><a href="/book/${book.id}">Открыть</a> </td>
+                    <td><a href="/subGroup/delete/${subGroup.id}/${book.id}">Удалить</a> </td>
                 </tr>
             <#else>
-                <div>No books</div>
+                <div>Книг нету</div>
             </#list>
             </tbody>
         </table>
@@ -31,16 +31,16 @@
                 <tr>
                     <td>${pBook.name}</td>
                     <td>${pBook.author}</td>
-                    <td><a href="/book/${pBook.id}">book profile</a> </td>
-                    <td><a href="/subGroup/add/${subGroup.id}/${pBook.id}">Add</a> </td>
+                    <td><a href="/book/${pBook.id}">Открыть</a> </td>
+                    <td><a href="/subGroup/add/${subGroup.id}/${pBook.id}">Добавить</a> </td>
                 </tr>
             <#else>
-                No Books
+                Книг нету
             </#list>
             </tbody>
         </table>
         <input type="hidden" value="${subGroup.id}" name="subGroupId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
     </form>
 </@c.page>

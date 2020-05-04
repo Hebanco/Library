@@ -5,7 +5,7 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <form method="get" action="/book/list">
-                    <input type="text" name="filter" value="${filter}" placeholder="Search by name"/>
+                    <input type="text" name="filter" value="${filter}" placeholder="Название для поиска"/>
                     <button type="submit"  class="btn btn-secondary">Найти</button>
                 </form>
             </div>
@@ -17,10 +17,10 @@
                 <span>${book.name}</span>
                 <span>${book.author}</span>
                 <#if book.descriptions??><a>${book.descriptions}</a></#if>
-                <a href="/book/${book.id}">Edit</a>
+                <a href="/book/${book.id}">Открыть</a>
             </div>
         <#else>
-            No books
+            Книг нету
         </#list>
 
     </div>

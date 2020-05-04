@@ -15,7 +15,7 @@
             <tr>
                 <td><a href="/subGroup/${subGroup.id}">${lesson.name}</a> </td>
 <#--                <td><a href="/subGroup/${subGroup.id}"/>Edit</td>-->
-                <td><a href="/lesson/${lesson.id}/delete/${subGroup.id}"/>Delete</td>
+                <td><a href="/lesson/${lesson.id}/delete/${subGroup.id}"/>Удалить</td>
 
             </tr>
         </#list>

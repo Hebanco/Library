@@ -4,10 +4,10 @@
     <#list teachers as teacher>
 
         <div>
-            <a href="/lesson/list/${teacher.id}">${teacher.username}</a>
+            <a href="/lesson/list/${teacher.id}">${teacher.fio}</a>
         </div>
 
         <#else>
-        No teachers
+        Учителей нету
     </#list>
 </@c.page>

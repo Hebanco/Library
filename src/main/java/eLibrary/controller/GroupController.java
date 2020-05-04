@@ -77,7 +77,7 @@ public class GroupController {
 
             subGroupRepo.save(subGroup);
         }else{
-            model.addAttribute("nameError","Name is Empty");
+            model.addAttribute("nameError","Введите имя");
         }
 
         return "subGroupEdit";

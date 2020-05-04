@@ -10,7 +10,7 @@
 <#--            <a href="/lesson/${lesson.id}">${lesson.name}</a>-->
 <#--        </div>-->
         <#else>
-        No lesson
+        Занятий нету
     </#list>
     </ul>
 </@c.page>

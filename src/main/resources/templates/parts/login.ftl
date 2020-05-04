@@ -2,10 +2,10 @@
 <#macro login path isRegisterForm>
     <form action="${path}" method="post">
         <div class="form-group">
-            <label for="inputName"> User Name : </label>
+            <label for="inputName"> Логин: </label>
             <input type="text" name="username" value="<#if user??>${user.username}</#if>"
                    class="form-control ${(usernameError??)?string('is-invalid', '')}"
-                   id = "inputName" placeholder="User name"/>
+                   id = "inputName" placeholder="Логин"/>
             <#if usernameError??>
                 <div class="invalid-feedback">
                     ${usernameError}
@@ -13,10 +13,10 @@
             </#if>
         </div>
         <div>
-            <label for="inputPassword"> Password:  </label>
+            <label for="inputPassword"> Пароль  </label>
             <input type="password" name="password"
                    class="form-control ${(passwordError??)?string('is-invalid', '')}"
-                   id = "inputPassword" placeholder="Password"/>
+                   id = "inputPassword" placeholder="Пароль"/>
             <#if passwordError??>
                 <div class="invalid-feedback">
                     ${passwordError}
@@ -36,7 +36,7 @@
 <#--                </#if>-->
 <#--            </div>-->
             <div class="mt-2">
-                <label for="inputEmail">Email: </label>
+                <label for="inputEmail">Почта </label>
                 <input type="email" name="email" value="<#if user??>${user.email}</#if>"
                        class="form-control ${(emailError??)?string('is-invalid', '')}"
                        id = "inputEmail" placeholder="some@some.com"/>
@@ -47,9 +47,9 @@
                 </#if>
             </div>
         </#if>
-        <#if !isRegisterForm> <a href="/recover">Password recovery</a></#if>
+        <#if !isRegisterForm> <a href="/recover">Восстановление пароля</a></#if>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <div class="mx-auto" style="width: 15%"><button type="submit" class="btn btn-primary mt-4"><#if isRegisterForm>Create <#else >Sing In</#if></button></div>
+        <div class="mx-auto" style="width: 15%"><button type="submit" class="btn btn-primary mt-4"><#if isRegisterForm>Создать <#else >Войти</#if></button></div>
     </form>
 </#macro>
 
@@ -57,6 +57,6 @@
 <#macro logout>
     <form action="/logout" method="post">
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <button type="submit" class="btn btn-primary"><#if currentUser??>Sing Out <#else>Log in</#if></button>
+        <button type="submit" class="btn btn-primary"><#if currentUser??>Другой пользователь<#else>Войти</#if></button>
     </form>
 </#macro>
