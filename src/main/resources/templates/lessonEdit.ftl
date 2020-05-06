@@ -7,7 +7,7 @@
 
     <table>
         <tbody>
-        <#if isTeacher || isAdmin>
+        <#if myLesson || isAdmin>
             <#if nameError??>
                 <@nsg.newSubGroup "${lesson.id}" nameError/>
             <#else>
@@ -19,7 +19,7 @@
         <#list subGroups as subGroup>
             <tr>
                 <td><a href="/subGroup/${subGroup.id}">${subGroup.name}</a> </td>
-                <#if isTeacher || isAdmin>
+                <#if myLesson || isAdmin>
                     <td><a href="/lesson/${lesson.id}/delete/${subGroup.id}"/>Удалить</td>
                 </#if>
 

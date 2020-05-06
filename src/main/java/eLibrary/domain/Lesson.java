@@ -14,7 +14,7 @@ public class Lesson {
     @NotBlank(message = "Введите название урока")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     private User teacher;
 
@@ -62,4 +62,5 @@ public class Lesson {
     public void setSubGroups(Set<LessonSubGroup> subGroups) {
         this.subGroups = subGroups;
     }
+
 }

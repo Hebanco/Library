@@ -56,7 +56,8 @@ public class LessonController {
 
         lessonRepo.save(lesson);
 
-        return "redirect:/user/"+teacher.getId();
+        model.addAttribute("teacher", teacher);
+        return "lessonCreate";
     }
 
     @GetMapping("/list/{teacher}")
@@ -109,10 +110,12 @@ public class LessonController {
     @GetMapping("{lesson}")
     public String lessonEdit(
             Model model,
-            @PathVariable Lesson lesson
+            @PathVariable Lesson lesson,
+            @AuthenticationPrincipal User user
     ){
         model.addAttribute("lesson", lesson);
         model.addAttribute("subGroups", lesson.getSubGroups());
+        model.addAttribute("myLesson", user.getId().equals(lesson.getTeacher().getId()));
 
         return "lessonEdit";
     }

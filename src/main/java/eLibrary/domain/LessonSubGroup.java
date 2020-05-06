@@ -14,7 +14,11 @@ public class LessonSubGroup {
 
     @NotBlank(message = "Введите название подгруппы")
     private String name;
-    
+
+    @ManyToOne()
+    @JoinColumn(name = "lesson_id")
+    private Lesson lesson;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "SubGroup_books",
@@ -51,11 +55,20 @@ public class LessonSubGroup {
         this.name = name;
     }
 
-    public Set<Book> getGroupsBook() {
+
+    public Lesson getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
+
+    public Set<Book> getGroupBooks() {
         return groupBooks;
     }
 
-    public void setGroupsBook(Set<Book> groupBooks) {
+    public void setGroupBooks(Set<Book> groupBooks) {
         this.groupBooks = groupBooks;
     }
 }

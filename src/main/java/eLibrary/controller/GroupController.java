@@ -2,10 +2,12 @@ package eLibrary.controller;
 
 import eLibrary.domain.Book;
 import eLibrary.domain.LessonSubGroup;
+import eLibrary.domain.User;
 import eLibrary.repos.BookRepo;
 import eLibrary.repos.SubGroupRepo;
 import eLibrary.repos.UserRepo;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -29,10 +31,12 @@ public class GroupController {
     public String subGroupEditForm(
             @PathVariable LessonSubGroup subGroup,
             Model model,
-            @RequestParam(required = false, defaultValue = "") String filter
+            @RequestParam(required = false, defaultValue = "") String filter,
+            @AuthenticationPrincipal User user
     ){
         model.addAttribute("subGroup", subGroup);
-        model.addAttribute("books", subGroup.getGroupsBook());
+        model.addAttribute("books", subGroup.getGroupBooks());
+        model.addAttribute("myLesson", subGroup.getLesson().getTeacher().getId().equals(user.getId()));
 
         Iterable<Book> possibleBooks;
         if(filter.isEmpty()){
@@ -71,7 +75,7 @@ public class GroupController {
             @PathVariable LessonSubGroup subGroup,
             @PathVariable Book book
             ){
-        subGroup.getGroupsBook().remove(book);
+        subGroup.getGroupBooks().remove(book);
         subGroupRepo.save(subGroup);
 
         return "redirect:/subGroup/"+subGroup.getId();
@@ -84,7 +88,7 @@ public class GroupController {
             @PathVariable LessonSubGroup subGroup,
             @PathVariable Book book
     ){
-        subGroup.getGroupsBook().add(book);
+        subGroup.getGroupBooks().add(book);
         subGroupRepo.save(subGroup);
 
         return "redirect:/subGroup/"+subGroup.getId();

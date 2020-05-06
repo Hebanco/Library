@@ -3,7 +3,7 @@
 
 <@c.page>
 
-    <#if isTeacher || isAdmin>
+    <#if myLesson || isAdmin>
         <form action="/subGroup/${subGroup.id}" method="get">
             <input type="text" name="filter" value="${filter}">
             <button type="submit" class="btn btn-secondary">Искать</button>
@@ -26,7 +26,8 @@
                 </tbody>
             </table>
 
-            <table class="mt-4">
+            <div class="mt-4">Возможные книги:</div>
+            <table>
                 <tbody
                 <#list possibleBook as pBook>
 
