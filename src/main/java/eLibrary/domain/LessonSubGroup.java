@@ -13,8 +13,8 @@ public class LessonSubGroup {
     private Long id;
 
     @NotBlank(message = "Введите название подгруппы")
-    String name;
-
+    private String name;
+    
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "SubGroup_books",

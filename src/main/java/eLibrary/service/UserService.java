@@ -33,7 +33,24 @@ public class UserService implements UserDetailsService {
                 .map(Role::name)
                 .collect(Collectors.toSet());
 
-        user.getRoles().clear();
+        if(!user.getRoles().isEmpty()) {
+            user.getRoles().clear();
+        }
+
+        for (String key : form.keySet()) {
+            if(roles.contains(key)){
+                user.getRoles().add(Role.valueOf(key));
+            }
+        }
+
+        userRepo.save(user);
+    }
+
+    public void saveUser(User user, Map<String, String> form) {
+
+        Set<String> roles = Arrays.stream(Role.values())
+                .map(Role::name)
+                .collect(Collectors.toSet());
 
         for (String key : form.keySet()) {
             if(roles.contains(key)){
@@ -64,7 +81,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
         user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
+        user.getRoles().add(Role.USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
 

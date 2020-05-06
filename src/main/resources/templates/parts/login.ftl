@@ -46,6 +46,12 @@
                     </div>
                 </#if>
             </div>
+
+            <#list roles as role>
+                <div>
+                    <label><input type="checkbox" name="${role}" <#--${user.roles?seq_contains(role)?string("checked","")}-->>${role}</label>
+                </div>
+            </#list>
         </#if>
         <#if !isRegisterForm> <a href="/recover">Восстановление пароля</a></#if>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
