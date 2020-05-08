@@ -130,4 +130,10 @@ public class UserService implements UserDetailsService {
 
         userRepo.save(user);
     }
+
+    public List<Role> getRolesWithoutUser() {
+        List<Role> roles = new ArrayList(Arrays.asList(Role.values()));
+        roles.remove(Role.USER);
+        return roles;
+    }
 }

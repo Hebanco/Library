@@ -3,8 +3,6 @@ package eLibrary.controller;
 import eLibrary.domain.Lesson;
 import eLibrary.domain.SubGroup;
 import eLibrary.domain.User;
-import eLibrary.repos.LessonRepo;
-import eLibrary.repos.SubGroupRepo;
 import eLibrary.service.LessonService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -55,8 +53,6 @@ public class LessonController {
         return "lessonCreate";
     }
 
-
-
     @GetMapping("/list/{teacher}")
     public String teacherLesson(
             Model model,
@@ -66,15 +62,11 @@ public class LessonController {
         return "lessonList";
     }
 
-
-
     @GetMapping("/list")
     public String allLesson(Model model){
         model.addAttribute("lessons", lessonService.getAll());
         return "lessonList";
     }
-
-
 
     @PreAuthorize("hasAnyAuthority('TEACHER')")
     @GetMapping("/myLessons")
@@ -105,8 +97,6 @@ public class LessonController {
         return "redirect:/lesson/"+lesson.getId();
     }
 
-
-
     @GetMapping("{lesson}")
     public String lessonEdit(
             Model model,
@@ -131,6 +121,4 @@ public class LessonController {
 
         return "redirect:/lesson/"+lesson.getId();
     }
-
-
 }

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class RegistrationController {
@@ -28,14 +30,8 @@ public class RegistrationController {
     @GetMapping("/registration")
     public String registration(Model model){
 
-        model.addAttribute("roles", getRolesWithoutUser());
+        model.addAttribute("roles", userService.getRolesWithoutUser());
         return "registration";
-    }
-
-    private List<Role> getRolesWithoutUser() {
-        List<Role> roles = new ArrayList(Arrays.asList(Role.values()));
-        roles.remove(Role.USER);
-        return roles;
     }
 
     @PostMapping("/registration")
@@ -46,24 +42,26 @@ public class RegistrationController {
             @RequestParam Map<String, String> form
     ){
 
+        List<Role> rolesWithoutUser = userService.getRolesWithoutUser();
+
         if(bindingResult.hasErrors()){
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errors);
             model.addAttribute("user", user);
-            model.addAttribute("roles", getRolesWithoutUser());
+            model.addAttribute("roles", rolesWithoutUser);
             return "registration";
         }
 
         if(!userService.addUser(user)){
             model.addAttribute("UsernameError", "User exists");
-            model.addAttribute("roles", getRolesWithoutUser());
+            model.addAttribute("roles", rolesWithoutUser);
             return "registration";
         }
         userService.saveUser(user,form);
 
         model.addAttribute("user",null);
         model.addAttribute("success",true);
-        model.addAttribute("roles", getRolesWithoutUser());
+        model.addAttribute("roles", rolesWithoutUser);
 
         return "registration";
     }
