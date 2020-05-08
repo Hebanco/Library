@@ -1,11 +1,9 @@
 package eLibrary.controller;
 
 import eLibrary.domain.Book;
-import eLibrary.domain.LessonSubGroup;
+import eLibrary.domain.SubGroup;
 import eLibrary.domain.User;
-import eLibrary.repos.BookRepo;
-import eLibrary.repos.SubGroupRepo;
-import eLibrary.repos.UserRepo;
+import eLibrary.service.SubGroupService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -13,23 +11,19 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @Controller
 @RequestMapping("/subGroup")
-public class GroupController {
+public class SubGroupController {
 
-    private final SubGroupRepo subGroupRepo;
-    private final BookRepo bookRepo;
+    private final SubGroupService subGroupService;
 
-    public GroupController(SubGroupRepo subGroupRepo, BookRepo bookRepo) {
-        this.subGroupRepo = subGroupRepo;
-        this.bookRepo = bookRepo;
+    public SubGroupController(SubGroupService subGroupService) {
+        this.subGroupService = subGroupService;
     }
 
     @GetMapping("{subGroup}")
     public String subGroupEditForm(
-            @PathVariable LessonSubGroup subGroup,
+            @PathVariable SubGroup subGroup,
             Model model,
             @RequestParam(required = false, defaultValue = "") String filter,
             @AuthenticationPrincipal User user
@@ -38,29 +32,24 @@ public class GroupController {
         model.addAttribute("books", subGroup.getGroupBooks());
         model.addAttribute("myLesson", subGroup.getLesson().getTeacher().getId().equals(user.getId()));
 
-        Iterable<Book> possibleBooks;
-        if(filter.isEmpty()){
-            possibleBooks = bookRepo.findFiveByRandom();
-        } else{
-            possibleBooks = bookRepo.findByNameLike(filter);
-        }
+        Iterable<Book> possibleBooks = subGroupService.getBooks(filter);
         model.addAttribute("filter", filter);
         model.addAttribute("possibleBook", possibleBooks);
 
         return "subGroupEdit";
     }
 
+
+
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @PostMapping
     public String subGroupSave(
             @RequestParam String name,
-            @RequestParam("subGroupId") LessonSubGroup subGroup,
+            @RequestParam("subGroupId") SubGroup subGroup,
             Model model
     ){
         if (!StringUtils.isEmpty(name)) {
-            subGroup.setName(name);
-
-            subGroupRepo.save(subGroup);
+            subGroupService.renameSubGroup(name, subGroup);
         }else{
             model.addAttribute("nameError","Введите имя");
         }
@@ -68,29 +57,33 @@ public class GroupController {
         return "subGroupEdit";
     }
 
+
+
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/delete/{subGroup}/{book}")
     public String deleteBook(
             Model model,
-            @PathVariable LessonSubGroup subGroup,
+            @PathVariable SubGroup subGroup,
             @PathVariable Book book
             ){
-        subGroup.getGroupBooks().remove(book);
-        subGroupRepo.save(subGroup);
+        subGroupService.removeBook(subGroup, book);
 
         return "redirect:/subGroup/"+subGroup.getId();
     }
+
+
 
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/add/{subGroup}/{book}")
     public String addBook(
             Model model,
-            @PathVariable LessonSubGroup subGroup,
+            @PathVariable SubGroup subGroup,
             @PathVariable Book book
     ){
-        subGroup.getGroupBooks().add(book);
-        subGroupRepo.save(subGroup);
+        subGroupService.addBook(subGroup, book);
 
         return "redirect:/subGroup/"+subGroup.getId();
     }
+
+
 }

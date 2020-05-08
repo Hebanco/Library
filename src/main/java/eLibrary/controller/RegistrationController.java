@@ -61,7 +61,11 @@ public class RegistrationController {
         }
         userService.saveUser(user,form);
 
-        return "redirect:/registration";
+        model.addAttribute("user",null);
+        model.addAttribute("success",true);
+        model.addAttribute("roles", getRolesWithoutUser());
+
+        return "registration";
     }
 
     @GetMapping("/recover")

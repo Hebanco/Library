@@ -1,9 +1,9 @@
 package eLibrary.repos;
 
-import eLibrary.domain.LessonSubGroup;
+import eLibrary.domain.SubGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SubGroupRepo extends JpaRepository<LessonSubGroup, Long> {
-    LessonSubGroup findByName(String name);
+public interface SubGroupRepo extends JpaRepository<SubGroup, Long> {
+    SubGroup findByName(String name);
 
 }

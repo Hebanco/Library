@@ -1,12 +1,12 @@
 package eLibrary.controller;
 
 import eLibrary.domain.Lesson;
-import eLibrary.domain.LessonSubGroup;
+import eLibrary.domain.SubGroup;
 import eLibrary.domain.User;
 import eLibrary.repos.LessonRepo;
 import eLibrary.repos.SubGroupRepo;
+import eLibrary.service.LessonService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,26 +14,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/lesson")
 public class LessonController {
 
-    private final LessonRepo lessonRepo;
-    private final SubGroupRepo subGroupRepo;
+    private final LessonService lessonService;
 
-    public LessonController(LessonRepo lessonRepo, SubGroupRepo subGroupRepo) {
-        this.lessonRepo = lessonRepo;
-        this.subGroupRepo = subGroupRepo;
+    public LessonController(LessonService lessonService) {
+        this.lessonService = lessonService;
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/new")
     public String newLesson(
             Model model,
-            @RequestParam(name = "teacherId"/*, required = false, defaultValue = ""*/) User teacher
+            @RequestParam(name = "teacherId") User teacher
     ){
         model.addAttribute("teacher", teacher);
         return "lessonCreate";
@@ -52,28 +49,32 @@ public class LessonController {
             model.addAttribute("teacher", teacher);
             return "lessonCreate";
         }
-        lesson.setTeacher(teacher);
-
-        lessonRepo.save(lesson);
+        lessonService.saveLesson(lesson, teacher);
 
         model.addAttribute("teacher", teacher);
         return "lessonCreate";
     }
+
+
 
     @GetMapping("/list/{teacher}")
     public String teacherLesson(
             Model model,
             @PathVariable User teacher
     ){
-        model.addAttribute("lessons",lessonRepo.findByTeacher(teacher));
+        model.addAttribute("lessons", lessonService.getByTeacher(teacher));
         return "lessonList";
     }
 
+
+
     @GetMapping("/list")
     public String allLesson(Model model){
-        model.addAttribute("lessons", lessonRepo.findAll());
+        model.addAttribute("lessons", lessonService.getAll());
         return "lessonList";
     }
+
+
 
     @PreAuthorize("hasAnyAuthority('TEACHER')")
     @GetMapping("/myLessons")
@@ -81,14 +82,14 @@ public class LessonController {
             Model model,
             @AuthenticationPrincipal User user
     ){
-        model.addAttribute("lessons", lessonRepo.findByTeacher(user));
+        model.addAttribute("lessons", lessonService.getByTeacher(user));
         return "lessonList";
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @PostMapping("/{lesson}")
     public String newSubGroup(
-            @Valid LessonSubGroup subGroup,
+            @Valid SubGroup subGroup,
             BindingResult bindingResult,
             Model model,
             @PathVariable Lesson lesson
@@ -100,12 +101,11 @@ public class LessonController {
             model.addAttribute("subGroups", lesson.getSubGroups());
             return "lessonEdit";
         }
-        subGroupRepo.save(subGroup);
-
-        lesson.getSubGroups().add(subGroup);
-        lessonRepo.save(lesson);
+        lessonService.addSubGroup(subGroup, lesson);
         return "redirect:/lesson/"+lesson.getId();
     }
+
+
 
     @GetMapping("{lesson}")
     public String lessonEdit(
@@ -125,11 +125,12 @@ public class LessonController {
     public String deleteSubGroup(
             Model model,
             @PathVariable Lesson lesson,
-            @PathVariable LessonSubGroup subGroup
+            @PathVariable SubGroup subGroup
     ){
-        lesson.getSubGroups().remove(subGroup);
-        lessonRepo.save(lesson);
+        lessonService.removeSubGroup(lesson, subGroup);
 
         return "redirect:/lesson/"+lesson.getId();
     }
+
+
 }

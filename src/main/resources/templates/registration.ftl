@@ -7,5 +7,11 @@
         ${message}
     </#if>
 
+    <#if success??>
+        <div class="alert alert-success" role="alert">
+            Пользователь создан
+        </div>
+    </#if>
+
     <@l.login "/registration" true/>
 </@c.page>

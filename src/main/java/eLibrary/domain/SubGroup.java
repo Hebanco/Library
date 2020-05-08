@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class LessonSubGroup {
+public class SubGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,15 +27,15 @@ public class LessonSubGroup {
     )
     private Set<Book> groupBooks = new HashSet<>();
 
-    public LessonSubGroup() {
+    public SubGroup() {
     }
 
-    public LessonSubGroup(String name, Set<Book> books) {
+    public SubGroup(String name, Set<Book> books) {
         this.name = name;
         groupBooks = books;
     }
 
-    public LessonSubGroup(String name) {
+    public SubGroup(String name) {
         this.name = name;
     }
 

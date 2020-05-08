@@ -2,6 +2,7 @@
 <#include "parts/security.ftl">
 
 <@c.page>
+    <h3><a href="/lesson/${subGroup.lesson.id}">${subGroup.lesson.name}</a></h3>
 
     <#if myLesson || isAdmin>
         <form action="/subGroup/${subGroup.id}" method="get">
@@ -10,7 +11,9 @@
         </form>
 
         <form action="/subGroup" method="post">
+            <div class="mt-2">Название подгруппы:</div>
             <input type="text" name="name" value="${subGroup.name}">
+            <div class="mt-4">Текущие книги:</div>
             <table>
                 <tbody>
                 <#list books as book>
@@ -44,7 +47,7 @@
             </table>
             <input type="hidden" value="${subGroup.id}" name="subGroupId">
             <input type="hidden" value="${_csrf.token}" name="_csrf">
-            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="submit" class="btn btn-primary mt-2">Сохранить</button>
         </form>
     <#else>
         <#include "parts/subGroupForUser.ftl">

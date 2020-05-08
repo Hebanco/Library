@@ -1,9 +1,7 @@
 package eLibrary.controller;
 
 import eLibrary.domain.Book;
-import eLibrary.repos.BookRepo;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
+import eLibrary.service.BookService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,23 +11,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/book")
 public class BookController {
 
-    private final BookRepo bookRepo;
+    private final BookService bookService;
 
-    @Value("${upload.path}")
-    private String uploadPath;
-
-    public BookController(BookRepo bookRepo) {
-        this.bookRepo = bookRepo;
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
@@ -39,13 +31,7 @@ public class BookController {
             @RequestParam(required = false, defaultValue = "") String filter
     ){
 
-        Iterable<Book> books;
-
-        if(!filter.isEmpty()) {
-            books = bookRepo.findByName(filter);
-        } else {
-            books = bookRepo.findAll();
-        }
+        Iterable<Book> books = bookService.getBooks(filter);
 
         model.addAttribute("books", books);
         model.addAttribute("filter", filter);
@@ -71,14 +57,11 @@ public class BookController {
             model.mergeAttributes(errorsMap);
             model.addAttribute("book", book);
         }else {
-
             if(file.getBytes().length>0) {
-                uploadFile(book, file);
+                bookService.uploadFile(book, file);
             }
 
             model.addAttribute("book", null);
-
-            bookRepo.save(book);
         }
         return "bookCreate";
     }
@@ -102,27 +85,10 @@ public class BookController {
         book.setDescriptions(description);
 
         if(file.getBytes().length>0) {
-            uploadFile(book, file);
+            bookService.uploadFile(book, file);
         }
 
         return "redirect:/book/list";
-    }
-
-    private void uploadFile(Book book,MultipartFile file) throws IOException {
-
-
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
-        }
-
-        String uuidFile = UUID.randomUUID().toString();
-        String resultFilename = uuidFile + "." + file.getOriginalFilename();
-
-        file.transferTo(new File(uploadPath + "/" + resultFilename));
-
-        book.setFilename(resultFilename);
-
     }
 
     @GetMapping("/download/{filename}")
@@ -131,14 +97,6 @@ public class BookController {
             @PathVariable("filename") String filename,
             HttpServletResponse response
     ) throws IOException {
-        response.setHeader("Content-Transfer-Encoding", "binary");
-        response.setContentType("application/force-download");
-
-        FileInputStream inputStream = new FileInputStream(uploadPath+"/"+filename);
-
-        IOUtils.copy(inputStream, response.getOutputStream());
-
-        response.flushBuffer();
+        bookService.downloadFile(filename, response);
     }
-
 }

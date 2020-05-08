@@ -17,7 +17,7 @@ create table lesson (
     primary key (id)
 ) engine=InnoDB;
 
-create table lesson_sub_group (
+create table sub_group (
     id bigint not null,
     name varchar(255) not null,
     lesson_id bigint,
@@ -50,7 +50,7 @@ alter table lesson
     add constraint lesson_user_fk
     foreign key (user_id) references usr (id);
 
-alter table lesson_sub_group
+alter table sub_group
     add constraint subGroup_lesson_fk
     foreign key (lesson_id) references lesson (id);
 
@@ -60,7 +60,7 @@ alter table sub_group_books
 
 alter table sub_group_books
     add constraint book_subGroup_fk
-    foreign key (book_id) references lesson_sub_group (id);
+    foreign key (book_id) references sub_group (id);
 
 alter table user_role
     add constraint user_role_fk

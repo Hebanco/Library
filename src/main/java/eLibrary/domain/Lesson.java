@@ -20,12 +20,12 @@ public class Lesson {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id")
-    private Set<LessonSubGroup> subGroups = new HashSet<>();
+    private Set<SubGroup> subGroups = new HashSet<>();
 
     public Lesson() {
     }
 
-    public Lesson(String name, User teacher, Set<LessonSubGroup> subGroups) {
+    public Lesson(String name, User teacher, Set<SubGroup> subGroups) {
         this.name = name;
         this.teacher = teacher;
         this.subGroups = subGroups;
@@ -55,11 +55,11 @@ public class Lesson {
         this.teacher = teacher;
     }
 
-    public Set<LessonSubGroup> getSubGroups() {
+    public Set<SubGroup> getSubGroups() {
         return subGroups;
     }
 
-    public void setSubGroups(Set<LessonSubGroup> subGroups) {
+    public void setSubGroups(Set<SubGroup> subGroups) {
         this.subGroups = subGroups;
     }
 
