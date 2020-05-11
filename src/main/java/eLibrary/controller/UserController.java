@@ -20,14 +20,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER_OVERSEER')")
     @GetMapping
     public String userList(Model model){
         model.addAttribute("users", userService.findAll());
         return "userList";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER_OVERSEER')")
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, Model model){
         model.addAttribute("user", user);
@@ -35,7 +35,7 @@ public class UserController {
         return "userEdit";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER_OVERSEER')")
     @PostMapping
     public String userSave(
             @RequestParam String username,
@@ -62,7 +62,7 @@ public class UserController {
         return "userProfile";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER_OVERSEER')")
     @GetMapping("/profile/{user}")
     public String userProfile(
             Model model,

@@ -13,9 +13,9 @@
     <#list users as user>
         <tr>
             <td>${user.username}</td>
-            <td><#list user.roles as role>${role}<#sep>, </#list> </td>
-            <td><a href="/user/${user.id}">Изменить роли</a> </td>
-            <#if isAdmin><td><a href="/user/profile/${user.id}">Профиль пользовтеля</a> </td></#if>
+<#--            <td><#list user.roles as role>${role}<#sep>, </#list> </td>-->
+            <#if isAdmin || isUserOverseer><td><a href="/user/${user.id}">Изменить роли</a> </td></#if>
+            <#if isAdmin || isUserOverseer || isLessonOverseer><td><a href="/user/profile/${user.id}">Профиль пользовтеля</a> </td></#if>
         </tr>
     </#list>
     </tbody>

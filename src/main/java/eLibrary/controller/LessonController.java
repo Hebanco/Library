@@ -78,7 +78,7 @@ public class LessonController {
         return "lessonList";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER','LESSON_OVERSEER')")
     @PostMapping("/{lesson}")
     public String newSubGroup(
             @Valid SubGroup subGroup,
@@ -110,7 +110,7 @@ public class LessonController {
         return "lessonEdit";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER','LESSON_OVERSEER')")
     @GetMapping("/{lesson}/delete/{subGroup}")
     public String deleteSubGroup(
             Model model,

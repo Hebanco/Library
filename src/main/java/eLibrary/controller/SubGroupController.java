@@ -39,7 +39,7 @@ public class SubGroupController {
         return "subGroupEdit";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER','LESSON_OVERSEER')")
     @PostMapping
     public String subGroupSave(
             @RequestParam String name,
@@ -55,7 +55,7 @@ public class SubGroupController {
         return "subGroupEdit";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER','LESSON_OVERSEER')")
     @GetMapping("/delete/{subGroup}/{book}")
     public String deleteBook(
             Model model,
@@ -67,7 +67,7 @@ public class SubGroupController {
         return "redirect:/subGroup/"+subGroup.getId();
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER','LESSON_OVERSEER')")
     @GetMapping("/add/{subGroup}/{book}")
     public String addBook(
             Model model,

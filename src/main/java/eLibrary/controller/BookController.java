@@ -24,7 +24,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER','LIBRARIAN')")
     @GetMapping("/list")
     public String main(
             Model model,
@@ -39,7 +39,7 @@ public class BookController {
         return "bookList";
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER','LIBRARIAN')")
     @GetMapping("/new")
     public String addBook(Model model){
         return "bookCreate";

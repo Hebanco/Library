@@ -4,7 +4,7 @@
 
     ${message?ifExists}
     <form action="/user/profileSave" method="post">
-        <#if isAdmin>
+        <#if isAdmin || isUserOverseer>
             <input type="text" class="form-control mb-5" name="fio" id = "inputFio" placeholder="ФИО" value="${user.fio!""}"/>
             <input type="text" class="form-control mb-5" name="username" id = "inputUsername" placeholder="Логин" value="${user.username!""}"/>
         <#else>
@@ -22,7 +22,7 @@
         </div>
         <input type="hidden" name="userId" value="${user.id}">
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <#if isAdmin && user.isTeacher()><a href="/lesson/new?teacherId=${user.id}">добавить предмет</a></#if>
+        <#if (isAdmin||isLessonOverseer) && user.isTeacher()><a href="/lesson/new?teacherId=${user.id}">добавить предмет</a></#if>
         <div class="mx-auto" style="width: 15%"><button type="submit" class="btn btn-primary">Сохранить</button></div>
     </form>
 </@c.page>

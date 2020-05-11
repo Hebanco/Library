@@ -43,6 +43,15 @@ public class User implements UserDetails {
     public boolean isAdmin(){
         return roles.contains(Role.ADMIN);
     }
+    public boolean isLibrarian(){
+        return roles.contains(Role.LIBRARIAN);
+    }
+    public boolean isLessonOverseer(){
+        return roles.contains(Role.LESSON_OVERSEER);
+    }
+    public boolean isUserOverseer(){
+        return roles.contains(Role.USER_OVERSEER);
+    }
 
     public Long getId() {
         return id;

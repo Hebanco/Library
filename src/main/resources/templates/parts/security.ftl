@@ -9,6 +9,9 @@ know = Session.SPRING_SECURITY_CONTEXT??
     fio = currentUser.getFio()
     isAdmin = currentUser.isAdmin()
     isTeacher = currentUser.isTeacher()
+    isLibrarian = currentUser.isLibrarian()
+    isLessonOverseer = currentUser.isLessonOverseer()
+    isUserOverseer = currentUser.isUserOverseer()
     currentUserId = currentUser.getId()
     >
 <#else>
@@ -16,6 +19,9 @@ know = Session.SPRING_SECURITY_CONTEXT??
     name = "anon"
     isAdmin = false
     isTeacher = false
+    isLibrarian = false
+    isLessonOverseer = false
+    isUserOverseer = false
     currentUserId = -1
     >
 </#if>

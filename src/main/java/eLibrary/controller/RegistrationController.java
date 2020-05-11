@@ -26,7 +26,7 @@ public class RegistrationController {
         this.userService = userService;
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER_OVERSEER')")
     @GetMapping("/registration")
     public String registration(Model model){
 
