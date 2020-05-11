@@ -19,11 +19,6 @@
                 <a class="nav-link" href="/user/teachers">Преподаватели<span class="sr-only">(current)</span></a>
             </li>
 
-            <#--            <li class="nav-item">-->
-            <#--                <a class="nav-link" href="/user/myProfile">Мой профиль<span class="sr-only">(current)</span></a>-->
-            <#--            </li>-->
-
-
             <#if isTeacher>
                 <li class="nav-item">
                     <a class="nav-link" href="/lesson/myLessons">Мои занятия<span class="sr-only">(current)</span></a>
@@ -39,8 +34,9 @@
                         <a class="dropdown-item" href="/registration">Новый пользователь</a>
                     </div>
                 </li>
+            </#if>
 
-
+            <#if isAdmin || isTeacher>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Книги

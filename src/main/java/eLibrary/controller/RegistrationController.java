@@ -107,11 +107,13 @@ public class RegistrationController {
             @RequestParam("password") String password,
             @RequestParam("password2") String password2
             ){
+
         User user = userService.findByUsername(username);
         if(!password.equals(password2)){
             model.addAttribute("message", "Passwords are different");
             return "passwordChange";
         }
+
         user.setPassword(password);
         user.setActivationCode(null);
         userService.saveUser(user);
