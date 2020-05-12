@@ -28,14 +28,44 @@
                     <label>Изменить обложку</label>
                     <input type="file" name="image">
                 </div>
-                <div>
-                    <label>Изменить файл</label>
-                    <input type="file" name="file">
-                </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <label>Изменить файл</label>
+                                <input type="file" name="file">
+                            </div>
+                            <div class="col">
+                            </div>
+                            <div class="col">
+                            </div>
+                            <div class="col">
+                                <#if isAdmin||isUserOverseer>
+                                <a href="/book/deleteFile/${book.id}" class="btn btn-warning ml-5">Удалить файл</a>
+                                </#if>
+                            </div>
+                        </div>
+                    </div>
+
             </#if>
             <input type="hidden" name="bookId" value="${book.id}"/>
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <button type="submit" class="btn btn-primary bt-3">Сохранить</button>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary bt-3">Сохранить</button>
+                    </div>
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                        <#if isAdmin||isUserOverseer>
+                            <a href="/book/delete/${book.id}" class="btn btn-danger ml-5">Удалить книгу</a>
+                        </#if>
+                    </div>
+                </div>
+            </div>
+
         </form>
     <#else>
         <#include "parts/bookProfileUser.ftl">

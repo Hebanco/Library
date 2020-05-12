@@ -121,4 +121,15 @@ public class LessonController {
 
         return "redirect:/lesson/"+lesson.getId();
     }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN','LESSON_OVERSEER')")
+    @GetMapping("/delete/{lesson}")
+    public String deleteLesson(
+            Model model,
+            @PathVariable Lesson lesson
+    ){
+        lessonService.removeLesson(lesson);
+
+        return "redirect:/lesson/list";
+    }
 }

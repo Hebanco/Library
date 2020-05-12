@@ -30,4 +30,22 @@
 
     <input type="hidden" value="${lesson.id}" name="userId">
 
+    <div>
+        <#if isAdmin||isLessonOverseer>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                        <a href="/lesson/delete/${lesson.id}" class="btn btn-danger ml-5">Удалить занятие</a>
+                    </div>
+                </div>
+            </div>
+        </#if>
+    </div>
+
 </@c.page>

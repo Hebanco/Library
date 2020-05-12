@@ -75,7 +75,6 @@ public class UserService implements UserDetailsService {
         if (userFromDB!=null){
             return false;
         }
-        user.setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
 
@@ -125,4 +124,7 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
     }
 
+    public void delete(User user) {
+        userRepo.delete(user);
+    }
 }

@@ -72,4 +72,14 @@ public class UserController {
         model.addAttribute("roles", Role.values());
         return "userProfile";
     }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER_OVERSEER')")
+    @GetMapping("/delete/{user}")
+    public String deleteUser(
+            Model model,
+            @PathVariable User user
+    ){
+        userService.delete(user);
+        return "redirect:/user";
+    }
 }

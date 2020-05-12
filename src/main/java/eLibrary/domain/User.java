@@ -22,7 +22,6 @@ public class User implements UserDetails {
     private String username;
     @NotBlank(message = "Введите пароль")
     private String password;
-    private boolean active;
     @NotBlank(message = "Введите ФИО")
     @Length(max = 255, message = "ФИО слишком длинное")
     private String fio;
@@ -82,7 +81,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isActive();
+        return true;
     }
 
     public void setUsername(String username) {
@@ -100,14 +99,6 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
     public Set<Role> getRoles() {

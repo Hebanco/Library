@@ -82,4 +82,13 @@ public class BookService {
     public void saveBook(Book book){
         bookRepo.save(book);
     }
+
+    public void removeBook(Book book) {
+        bookRepo.delete(book);
+    }
+
+    public void removeBookFile(Book book) {
+        book.setFilename(null);
+        bookRepo.save(book);
+    }
 }

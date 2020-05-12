@@ -26,6 +26,26 @@
         <#if isAdmin||isUserOverseer>
             <#include "parts/rolesEdit.ftl">
         </#if>
-        <div class="mx-auto" style="width: 15%"><button type="submit" class="btn btn-primary">Сохранить</button></div>
+        <div class="mx-auto" style="width: 15%">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+
+        </div>
+        <div>
+            <#if isAdmin||isUserOverseer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                        </div>
+                        <div class="col">
+                        </div>
+                        <div class="col">
+                        </div>
+                        <div class="col">
+                            <a href="/user/delete/${user.id}" class="btn btn-danger ml-5">Удалить пользователя</a>
+                        </div>
+                    </div>
+                </div>
+            </#if>
+        </div>
     </form>
 </@c.page>

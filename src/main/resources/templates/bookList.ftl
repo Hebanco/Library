@@ -1,5 +1,5 @@
 <#import "parts/common.ftl" as c>
->
+
 <@c.page>
     <a href="/book/new" class="btn btn-primary mb-3">Добавить книгу</a>
 

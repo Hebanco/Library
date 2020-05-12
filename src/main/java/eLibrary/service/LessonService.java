@@ -42,6 +42,13 @@ public class LessonService {
 
     public void removeSubGroup(Lesson lesson, SubGroup subGroup) {
         lesson.getSubGroups().remove(subGroup);
+        subGroupRepo.delete(subGroup);
         lessonRepo.save(lesson);
+    }
+
+    public void removeLesson(Lesson lesson) {
+        lesson.getSubGroups().clear();
+        lessonRepo.save(lesson);
+        lessonRepo.delete(lesson);
     }
 }

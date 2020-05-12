@@ -1,6 +1,7 @@
 package eLibrary.controller;
 
 import eLibrary.domain.Book;
+import eLibrary.domain.Lesson;
 import eLibrary.service.BookService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -104,5 +105,28 @@ public class BookController {
             HttpServletResponse response
     ) throws IOException {
         bookService.downloadFile(filename, response);
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN','LIBRARIAN')")
+    @GetMapping("/delete/{book}")
+    public String deleteBook(
+            Model model,
+            @PathVariable Book book
+    ){
+        bookService.removeBook(book);
+
+        return "redirect:/book/list";
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN','LIBRARIAN')")
+    @GetMapping("/deleteFile/{book}")
+    public String deleteBookFile(
+            Model model,
+            @PathVariable Book book
+    ){
+        bookService.removeBookFile(book);
+
+        model.addAttribute("book", book);
+        return "bookEdit";
     }
 }
