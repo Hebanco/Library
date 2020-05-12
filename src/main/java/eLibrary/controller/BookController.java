@@ -50,6 +50,7 @@ public class BookController {
             @Valid Book book,
             BindingResult bindingResult,
             @RequestParam("file") MultipartFile file,
+            @RequestParam("image") MultipartFile image,
             Model model
     ) throws IOException {
         if(bindingResult.hasErrors()){
@@ -57,8 +58,13 @@ public class BookController {
             model.mergeAttributes(errorsMap);
             model.addAttribute("book", book);
         }else {
-            if(file.getBytes().length>0) {
+            if(!file.getOriginalFilename().isEmpty()) {
                 bookService.uploadFile(book, file);
+            } else {
+                bookService.saveBook(book);
+            }
+            if(!image.getOriginalFilename().isEmpty()) {
+                bookService.uploadImage(book, image);
             }
 
             model.addAttribute("book", null);

@@ -30,7 +30,7 @@ public class RegistrationController {
     @GetMapping("/registration")
     public String registration(Model model){
 
-        model.addAttribute("roles", userService.getRolesWithoutUser());
+        model.addAttribute("roles", Role.values());
         return "registration";
     }
 
@@ -42,26 +42,26 @@ public class RegistrationController {
             @RequestParam Map<String, String> form
     ){
 
-        List<Role> rolesWithoutUser = userService.getRolesWithoutUser();
+//        List<Role> rolesWithoutUser = userService.getRolesWithoutUser();
 
         if(bindingResult.hasErrors()){
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errors);
             model.addAttribute("user", user);
-            model.addAttribute("roles", rolesWithoutUser);
+            model.addAttribute("roles", Role.values());
             return "registration";
         }
 
         if(!userService.addUser(user)){
             model.addAttribute("UsernameError", "User exists");
-            model.addAttribute("roles", rolesWithoutUser);
+            model.addAttribute("roles", Role.values());
             return "registration";
         }
         userService.saveUser(user,form);
 
         model.addAttribute("user",null);
         model.addAttribute("success",true);
-        model.addAttribute("roles", rolesWithoutUser);
+        model.addAttribute("roles", Role.values());
 
         return "registration";
     }

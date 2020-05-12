@@ -1,6 +1,8 @@
 <#import "parts/common.ftl" as c>
 >
 <@c.page>
+    <a href="/book/new" class="btn btn-primary mb-3">Добавить книгу</a>
+
     <div id="books-list">
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -13,6 +15,9 @@
 
         <#list books as book>
             <div>
+                <#if book.imageName??>
+                    <img src="/img/${book.imageName}">
+                </#if>
                 <span>#{book.id}</span>
                 <span>${book.name}</span>
                 <span>${book.author}</span>
@@ -21,7 +26,6 @@
         <#else>
             Книг нету
         </#list>
-
     </div>
-    <a href="/book/new">Добавить книгу</a>
+
 </@c.page>

@@ -26,8 +26,27 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void saveUser(User user, String username, Map<String, String> form) {
-        user.setUsername(username);
+//    public void saveUser(User user, String username, Map<String, String> form) {
+//        user.setUsername(username);
+//
+//        Set<String> roles = Arrays.stream(Role.values())
+//                .map(Role::name)
+//                .collect(Collectors.toSet());
+//
+//        if(!user.getRoles().isEmpty()) {
+//            user.getRoles().clear();
+//        }
+//
+//        for (String key : form.keySet()) {
+//            if(roles.contains(key)){
+//                user.getRoles().add(Role.valueOf(key));
+//            }
+//        }
+//
+//        userRepo.save(user);
+//    }
+
+    public void saveUser(User user, Map<String, String> form) {
 
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)
@@ -37,20 +56,9 @@ public class UserService implements UserDetailsService {
             user.getRoles().clear();
         }
 
-        for (String key : form.keySet()) {
-            if(roles.contains(key)){
-                user.getRoles().add(Role.valueOf(key));
-            }
+        if(!user.getRoles().isEmpty()) {
+            user.getRoles().clear();
         }
-
-        userRepo.save(user);
-    }
-
-    public void saveUser(User user, Map<String, String> form) {
-
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(Collectors.toSet());
 
         for (String key : form.keySet()) {
             if(roles.contains(key)){
@@ -81,7 +89,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
         user.setActive(true);
-        user.getRoles().add(Role.USER);
+//        user.getRoles().add(Role.USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
 
@@ -131,9 +139,9 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
     }
 
-    public List<Role> getRolesWithoutUser() {
-        List<Role> roles = new ArrayList(Arrays.asList(Role.values()));
-        roles.remove(Role.USER);
-        return roles;
-    }
+//    public List<Role> getRolesWithoutUser() {
+//        List<Role> roles = new ArrayList(Arrays.asList(Role.values()));
+//        roles.remove(Role.USER);
+//        return roles;
+//    }
 }

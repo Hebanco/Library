@@ -6,6 +6,7 @@ create table book (
     author varchar(255),
     descriptions varchar(2048),
     filename varchar(255),
+    image_name varchar(255),
     name varchar(255) not null,
     primary key (id)
 ) engine=InnoDB;

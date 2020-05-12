@@ -16,12 +16,17 @@
                 ${authorError}
             </div>
         </#if>
-        <div><label>Описание:</label></div>
+        <div><label class="mt-3">Описание:</label></div>
         <div>
-            <textarea name="descriptions" class="mt-3" maxlength="2048" cols="100%"></textarea>
+            <textarea name="descriptions"  maxlength="2048" cols="100%"></textarea>
         </div>
         <div>
-            <input class="mt-3" type="file" name="file">
+            <label class="mt-3">Обложка:</label>
+            <input type="file" name="image">
+        </div>
+        <div>
+            <label class="mt-3">Файл:</label>
+            <input type="file" name="file">
         </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <button type="submit" class="btn btn-primary mt-3">Сохранить</button>

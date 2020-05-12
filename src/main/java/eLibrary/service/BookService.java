@@ -15,8 +15,10 @@ import java.util.UUID;
 
 @Service
 public class BookService {
-    @Value("${upload.path}")
-    private String uploadPath;
+    @Value("${upload.file.path}")
+    private String uploadFilePath;
+    @Value("${upload.image.path}")
+    private String uploadImagePath;
 
     private final BookRepo bookRepo;
 
@@ -26,6 +28,23 @@ public class BookService {
 
     public void uploadFile(Book book, MultipartFile file) throws IOException {
 
+        String resultFilename = createFile(file, uploadFilePath);
+
+        book.setFilename(resultFilename);
+
+        bookRepo.save(book);
+    }
+
+    public void uploadImage(Book book, MultipartFile image) throws IOException {
+
+        String resultFilename = createFile(image, uploadImagePath);
+
+        book.setImageName(resultFilename);
+
+        bookRepo.save(book);
+    }
+
+    private String createFile(MultipartFile file, String uploadPath) throws IOException {
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
@@ -36,17 +55,14 @@ public class BookService {
 
         file.transferTo(new File(uploadPath + "/" + resultFilename));
 
-        book.setFilename(resultFilename);
-
-        bookRepo.save(book);
-
+        return resultFilename;
     }
 
     public void downloadFile(String filename, HttpServletResponse response) throws IOException {
         response.setHeader("Content-Transfer-Encoding", "binary");
         response.setContentType("application/force-download");
 
-        FileInputStream inputStream = new FileInputStream(uploadPath+"/"+filename);
+        FileInputStream inputStream = new FileInputStream(uploadFilePath+"/"+filename);
 
         IOUtils.copy(inputStream, response.getOutputStream());
 
@@ -61,5 +77,9 @@ public class BookService {
             books = bookRepo.findAll();
         }
         return books;
+    }
+
+    public void saveBook(Book book){
+        bookRepo.save(book);
     }
 }

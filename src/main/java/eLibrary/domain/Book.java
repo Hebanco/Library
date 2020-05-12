@@ -24,6 +24,7 @@ public class Book {
     private String descriptions;
 
     private String filename;
+    private String imageName;
 
     public Book() {
     }
@@ -72,5 +73,13 @@ public class Book {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String image) {
+        this.imageName = image;
     }
 }
