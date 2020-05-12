@@ -42,8 +42,6 @@ public class RegistrationController {
             @RequestParam Map<String, String> form
     ){
 
-//        List<Role> rolesWithoutUser = userService.getRolesWithoutUser();
-
         if(bindingResult.hasErrors()){
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errors);

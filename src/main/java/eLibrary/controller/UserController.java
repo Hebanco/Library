@@ -22,30 +22,13 @@ public class UserController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN','USER_OVERSEER')")
     @GetMapping
-    public String userList(Model model){
-        model.addAttribute("users", userService.findAll());
+    public String userList(
+            Model model,
+            @RequestParam(required = false, defaultValue = "") String filter){
+        model.addAttribute("users", userService.findAll(filter));
+        model.addAttribute("filter",filter);
         return "userList";
     }
-
-//    @PreAuthorize("hasAnyAuthority('ADMIN','USER_OVERSEER')")
-//    @GetMapping("{user}")
-//    public String userEditForm(@PathVariable User user, Model model){
-//        model.addAttribute("user", user);
-//        model.addAttribute("roles", Role.values());
-//        return "userEdit";
-//    }
-//
-//    @PreAuthorize("hasAnyAuthority('ADMIN','USER_OVERSEER')")
-//    @PostMapping
-//    public String userSave(
-//            @RequestParam String username,
-//            @RequestParam Map<String, String> form,
-//            @RequestParam("userId") User user
-//    ){
-//        userService.saveUser(user, username, form);
-//
-//        return "redirect:/user";
-//    }
 
     @GetMapping("/teachers")
     public String teachersList(Model model){
@@ -75,12 +58,12 @@ public class UserController {
 
     @PostMapping("/profileSave")
     public String saveProfile(
-        Model model,
-        @RequestParam("userId") User user,
-        @RequestParam(required = false, defaultValue = "", name = "username") String username,
-        @RequestParam String password,
-        @RequestParam String email,
-        @RequestParam Map<String, String> form
+            Model model,
+            @RequestParam("userId") User user,
+            @RequestParam(required = false, defaultValue = "", name = "username") String username,
+            @RequestParam String password,
+            @RequestParam String email,
+            @RequestParam Map<String, String> form
     ){
         userService.updateProfile(user, username, password, email);
         userService.saveUser(user, form);

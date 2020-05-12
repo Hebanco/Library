@@ -23,4 +23,8 @@ public interface UserRepo extends JpaRepository<User, Long> {
     User findByEmail(String email);
 
     User findByActivationCode(String code);
+
+    @Query(value = "SELECT * from usr WHERE username LIKE CONCAT('%',:filter,'%') OR fio LIKE CONCAT('%',:filter,'%')",
+            nativeQuery = true)
+    List<User> findByName(String filter);
 }
