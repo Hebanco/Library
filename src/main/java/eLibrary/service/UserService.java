@@ -87,13 +87,13 @@ public class UserService implements UserDetailsService {
 
     public void sendMail(User user) {
         String message = String.format(
-                "Hello, %s! \n"+
-                        "Link for password recover http://localhost:8080/recover/%s",
-                user.getUsername(),
+                "Приетствую, %s! \n"+
+                        "Ссылка для восстановления пароля: http://localhost:8080/recover/%s",
+                user.getFio(),
                 user.getActivationCode()
         );
 
-        mailSender.send(user.getEmail(), "Password recover", message);
+        mailSender.send(user.getEmail(), "Восстановление пароля", message);
     }
 
     public User findByActivationCode(String code) {

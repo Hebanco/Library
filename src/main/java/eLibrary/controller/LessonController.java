@@ -94,7 +94,7 @@ public class LessonController {
             return "lessonEdit";
         }
         lessonService.addSubGroup(subGroup, lesson);
-        return "redirect:/lesson/"+lesson.getId();
+        return "redirect:/lesson/redact/"+lesson.getId();
     }
 
     @GetMapping("{lesson}")
@@ -105,7 +105,8 @@ public class LessonController {
     ){
         model.addAttribute("lesson", lesson);
         model.addAttribute("subGroups", lesson.getSubGroups());
-        model.addAttribute("myLesson", user.getId().equals(lesson.getTeacher().getId()));
+        boolean isMyLesson = user.getId().equals(lesson.getTeacher().getId());
+        model.addAttribute("myLesson", isMyLesson);
 
         return "lessonEdit";
     }
@@ -119,7 +120,7 @@ public class LessonController {
     ){
         lessonService.removeSubGroup(lesson, subGroup);
 
-        return "redirect:/lesson/"+lesson.getId();
+        return "redirect:/lesson/redact/"+lesson.getId();
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','LESSON_OVERSEER')")
@@ -131,5 +132,28 @@ public class LessonController {
         lessonService.removeLesson(lesson);
 
         return "redirect:/lesson/list";
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER','LESSON_OVERSEER')")
+    @GetMapping("/redact/{lesson}")
+    public String redactLesson(
+            Model model,
+            @PathVariable Lesson lesson,
+            @AuthenticationPrincipal User user
+            ){
+        model.addAttribute("lesson", lesson);
+        model.addAttribute("subGroups", lesson.getSubGroups());
+
+        return "lessonRedact";
+    }
+
+    @PostMapping("/redact/{lesson}")
+    public String renameLesson(
+            Model model,
+            @PathVariable Lesson lesson,
+            @RequestParam(required = false, defaultValue = "", name = "name") String name
+    ){
+        lessonService.renameLesson(lesson, name);
+        return "redirect:/lesson/"+lesson.getId();
     }
 }

@@ -2,7 +2,7 @@
 <@c.page>
     <form method="post" action="/lesson/new">
         <div><label> Название занятия:
-                <input type="text" name="name" placeholder="название"
+                <input type="text" name="name" placeholder="Название"
                        class="form-control ${(nameError??)?string('is-invalid', '')}"/>
             </label>
             <#if nameError??>

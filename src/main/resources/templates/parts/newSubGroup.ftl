@@ -1,5 +1,5 @@
 <#macro newSubGroup lesson nameError="">
-    <form method="post" <#--action="${lesson}/addSubGroup"-->>
+    <form method="post" action="/lesson/${lesson}">
         <div>
             <label>Новая подгруппа:<input type="text" name="name"  placeholder="Название"
                    class="form-control ${(nameError?has_content)?string('is-invalid', '')}"/></label>

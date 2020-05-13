@@ -51,4 +51,11 @@ public class LessonService {
         lessonRepo.save(lesson);
         lessonRepo.delete(lesson);
     }
+
+    public void renameLesson(Lesson lesson, String name) {
+        if (!name.isEmpty() && name.length()>1){
+            lesson.setName(name);
+            lessonRepo.save(lesson);
+        }
+    }
 }
