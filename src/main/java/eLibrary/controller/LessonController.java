@@ -94,7 +94,7 @@ public class LessonController {
             return "lessonEdit";
         }
         lessonService.addSubGroup(subGroup, lesson);
-        return "redirect:/lesson/redact/"+lesson.getId();
+        return "redirect:/lesson/"+lesson.getId();
     }
 
     @GetMapping("{lesson}")

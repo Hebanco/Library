@@ -11,17 +11,21 @@
 
     <table>
         <tbody>
-<#--        <#if myLesson || isAdmin || isLessonOverseer>-->
-<#--            <#if nameError??>-->
-<#--                <@nsg.newSubGroup "${lesson.id}" nameError/>-->
-<#--            <#else>-->
-<#--                <@nsg.newSubGroup "${lesson.id}"/>-->
-<#--            </#if>-->
-<#--        </#if>-->
+        <#if myLesson || isAdmin || isLessonOverseer>
+            <#if nameError??>
+                <@nsg.newSubGroup "${lesson.id}" nameError/>
+            <#else>
+                <@nsg.newSubGroup "${lesson.id}"/>
+            </#if>
+        </#if>
         <h5>Список подгрупп</h5>
         <#list subGroups as subGroup>
             <tr>
                 <td><a href="/subGroup/${subGroup.id}">${subGroup.name}</a> </td>
+
+                <#if isLessonOverseer || isAdmin || myLesson>
+                    <td><a href="/lesson/${lesson.id}/delete/${subGroup.id}"/>Удалить</td>
+                </#if>
             </tr>
         </#list>
         </tbody>
