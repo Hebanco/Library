@@ -9,7 +9,7 @@
         <a href="/lesson/redact/${lesson.id}" class="btn btn-link">Редактировать</a>
     </#if>
 
-    <table>
+    <table id="subGroups">
         <tbody>
         <#if myLesson || isAdmin || isLessonOverseer>
             <#if nameError??>
@@ -21,7 +21,7 @@
         <h5>Список подгрупп</h5>
         <#list subGroups as subGroup>
             <tr>
-                <td><a href="/subGroup/${subGroup.id}">${subGroup.name}</a> </td>
+                <td><a href="/subGroup/${subGroup.id}">${subGroup.name}</a></td>
 
                 <#if isLessonOverseer || isAdmin || myLesson>
                     <td><a href="/lesson/${lesson.id}/delete/${subGroup.id}"/>Удалить</td>
@@ -31,5 +31,4 @@
         </tbody>
     </table>
 
-<#--    <input type="hidden" value="${lesson.id}" name="userId">-->
 </@c.page>

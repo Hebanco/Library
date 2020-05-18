@@ -49,7 +49,7 @@
 
             <#list roles as role>
                 <div>
-                    <label><input type="checkbox" name="${role}">${role.getRusName()}</label>
+                    <label><input type="checkbox" name="${role}"/>${role.getRusName()}</label>
                 </div>
             </#list>
         </#if>

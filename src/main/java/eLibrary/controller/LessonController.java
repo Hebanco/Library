@@ -97,7 +97,7 @@ public class LessonController {
         return "redirect:/lesson/"+lesson.getId();
     }
 
-    @GetMapping("{lesson}")
+    @GetMapping("/{lesson}")
     public String lessonEdit(
             Model model,
             @PathVariable Lesson lesson,

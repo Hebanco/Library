@@ -10,7 +10,7 @@
             </#if>
             <input type="hidden" name="lessonId" value=${lesson}/>
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <input type="submit" class="btn btn-secondary" value="Add">
+            <button type="submit" class="btn btn-secondary">Добавить</button>
         </div>
     </form>
 </#macro>
