@@ -10,7 +10,7 @@
             <button type="submit" class="btn btn-secondary">Искать</button>
         </form>
 
-        <form action="/subGroup" method="post">
+        <form action="/subGroup/${subGroup.id}" method="post">
             <div class="mt-2">Название подгруппы:</div>
             <input type="text" name="name" value="${subGroup.name}">
             <div class="mt-4">Текущие книги:</div>

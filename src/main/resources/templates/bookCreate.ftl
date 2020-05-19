@@ -2,6 +2,7 @@
 <@c.page>
     <form method="post" action="/book/new" enctype="multipart/form-data">
 
+        <div><label>Название:</label></div>
         <input type="text" class="form-control ${(nameError??)?string('is-invalid', '')}"
                value="<#if book??>${book.name}</#if>" name="name" placeholder="Название">
         <#if nameError??>
@@ -9,7 +10,8 @@
                 ${nameError}
             </div>
         </#if>
-        <input type="text" class="form-control mt-3 ${(authorError??)?string('is-invalid', '')}"
+        <div><label class="mt-3">Автор:</label></div>
+        <input type="text" class="form-control ${(authorError??)?string('is-invalid', '')}"
                name="author" placeholder="Автор">
         <#if authorError??>
             <div class="invalid-feedback">

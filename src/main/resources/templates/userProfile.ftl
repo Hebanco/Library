@@ -5,11 +5,13 @@
     ${message?ifExists}
     <form action="/user/profileSave" method="post">
         <#if isAdmin || isUserOverseer>
-            <input type="text" class="form-control mb-5" name="fio" id = "inputFio" placeholder="ФИО" value="${user.fio!""}"/>
+            <label for="inputFio"> ФИО:  </label>
+            <input type="text" class="form-control mb-3" name="fio" id = "inputFio" placeholder="ФИО" value="${user.fio!""}"/>
+            <label for="inputUsername"> Логин:  </label>
             <input type="text" class="form-control mb-3" name="username" id = "inputUsername" placeholder="Логин" value="${user.username!""}"/>
         <#else>
-            <h5>${user.fio}</h5>
-            <h5>${user.username}</h5>
+            <h5>ФИО: ${user.fio}</h5>
+            <h5>Логин: ${user.username}</h5>
         </#if>
 
         <div>

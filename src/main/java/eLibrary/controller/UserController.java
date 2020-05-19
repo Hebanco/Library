@@ -42,6 +42,7 @@ public class UserController {
             @AuthenticationPrincipal User user
     ){
         model.addAttribute("user", user);
+        model.addAttribute("roles", Role.values());
         return "userProfile";
     }
 
@@ -63,9 +64,10 @@ public class UserController {
             @RequestParam(required = false, defaultValue = "", name = "username") String username,
             @RequestParam String password,
             @RequestParam String email,
+            @RequestParam String fio,
             @RequestParam Map<String, String> form
     ){
-        userService.updateProfile(user, username, password, email);
+        userService.updateProfile(user, username, password, email, fio);
         userService.saveUser(user, form);
         model.addAttribute("user", user);
         model.addAttribute("message", "Save successfully");

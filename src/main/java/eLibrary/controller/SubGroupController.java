@@ -21,7 +21,7 @@ public class SubGroupController {
         this.subGroupService = subGroupService;
     }
 
-    @GetMapping("{subGroup}")
+    @GetMapping("/{subGroup}")
     public String subGroupEditForm(
             @PathVariable SubGroup subGroup,
             Model model,
@@ -40,7 +40,7 @@ public class SubGroupController {
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER','LESSON_OVERSEER')")
-    @PostMapping
+    @PostMapping("/{subGroup}")
     public String subGroupSave(
             @RequestParam String name,
             @RequestParam("subGroupId") SubGroup subGroup,
@@ -50,9 +50,10 @@ public class SubGroupController {
             subGroupService.renameSubGroup(name, subGroup);
         }else{
             model.addAttribute("nameError","Введите имя");
+//            model.addAttribute("lesson", subGroup.getLesson());
         }
 
-        return "subGroupEdit";
+        return "redirect:/subGroup/"+subGroup.getId();
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER','LESSON_OVERSEER')")
