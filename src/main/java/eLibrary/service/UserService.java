@@ -33,13 +33,7 @@ public class UserService implements UserDetailsService {
                 .map(Role::name)
                 .collect(Collectors.toSet());
 
-        if(!user.getRoles().isEmpty()) {
             user.getRoles().clear();
-        }
-
-        if(!user.getRoles().isEmpty()) {
-            user.getRoles().clear();
-        }
 
         for (String key : form.keySet()) {
             if(roles.contains(key)){
@@ -85,7 +79,10 @@ public class UserService implements UserDetailsService {
         return userRepo.findByEmail(email);
     }
 
-    public void sendMail(User user) {
+    public void sendMail(String email) {
+        User user = findByEmail(email);
+        user.setActivationCode(UUID.randomUUID().toString());
+
         String message = String.format(
                 "Приетствую, %s! \n"+
                         "Ссылка для восстановления пароля: http://localhost:8080/recover/%s",
@@ -102,6 +99,12 @@ public class UserService implements UserDetailsService {
 
     public User findByUsername(String username) {
         return userRepo.findByUsername(username);
+    }
+
+    public void saveUser(User user, String password,String activationCode) {
+        userRepo.save(user);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setActivationCode(activationCode);
     }
 
     public void saveUser(User user) {

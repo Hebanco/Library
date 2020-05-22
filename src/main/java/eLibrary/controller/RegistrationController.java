@@ -75,9 +75,7 @@ public class RegistrationController {
             @RequestParam("email") String email
             ){
         if(!email.isEmpty()) {
-            User user = userService.findByEmail(email);
-            user.setActivationCode(UUID.randomUUID().toString());
-            userService.sendMail(user);
+            userService.sendMail(email);
         }
 
         return "passwordRecoverEmail";
@@ -112,9 +110,7 @@ public class RegistrationController {
             return "passwordChange";
         }
 
-        user.setPassword(password);
-        user.setActivationCode(null);
-        userService.saveUser(user);
+        userService.saveUser(user, password, null);
         return "redirect:/login";
     }
 }

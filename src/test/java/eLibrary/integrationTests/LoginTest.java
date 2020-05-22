@@ -1,4 +1,4 @@
-package eLibrary;
+package eLibrary.integrationTests;
 
 import eLibrary.controller.GreetingController;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package eLibrary;
+package eLibrary.integrationTests;
 
 import eLibrary.controller.LessonController;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ public class LessonControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void mainPageTest() throws Exception {
+    public void authenticatedFioTest() throws Exception {
         this.mockMvc.perform(get("/lesson/list"))
                 .andDo(print())
                 .andExpect(authenticated())
@@ -58,11 +58,6 @@ public class LessonControllerTest {
         this.mockMvc.perform(multipart)
                 .andDo(print())
                 .andExpect(authenticated());
-
-        this.mockMvc.perform(get("/lesson/list"))
-                .andDo(print())
-                .andExpect(authenticated())
-                .andExpect(xpath("//*[@id='lesson-list']/a").nodeCount(3));
     }
 
     @Test
