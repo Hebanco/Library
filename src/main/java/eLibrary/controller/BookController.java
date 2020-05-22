@@ -1,7 +1,6 @@
 package eLibrary.controller;
 
 import eLibrary.domain.Book;
-import eLibrary.domain.Lesson;
 import eLibrary.service.BookService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -59,14 +58,7 @@ public class BookController {
             model.mergeAttributes(errorsMap);
             model.addAttribute("book", book);
         }else {
-            if(!file.getOriginalFilename().isEmpty()) {
-                bookService.uploadFile(book, file);
-            } else {
-                bookService.saveBook(book);
-            }
-            if(!image.getOriginalFilename().isEmpty()) {
-                bookService.uploadImage(book, image);
-            }
+            bookService.uploadFile(book, file, image);
 
             model.addAttribute("book", null);
         }
@@ -85,15 +77,14 @@ public class BookController {
             @RequestParam String author,
             @RequestParam String description,
             @RequestParam("bookId") Book book,
-            @RequestParam(required = false, defaultValue = "", name = "file") MultipartFile file
+            @RequestParam(required = false, defaultValue = "", name = "file") MultipartFile file,
+            @RequestParam(required = false, defaultValue = "", name = "image") MultipartFile image
     ) throws IOException {
         book.setName(name);
         book.setAuthor(author);
-        book.setDescriptions(description);
+        book.setDescription(description);
 
-        if(file.getBytes().length>0) {
-            bookService.uploadFile(book, file);
-        }
+        bookService.uploadFile(book, file, image);
 
         return "redirect:/book/list";
     }
@@ -125,6 +116,18 @@ public class BookController {
             @PathVariable Book book
     ){
         bookService.removeBookFile(book);
+
+        model.addAttribute("book", book);
+        return "bookEdit";
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN','LIBRARIAN')")
+    @GetMapping("/deleteImage/{book}")
+    public String deleteBookImage(
+            Model model,
+            @PathVariable Book book
+    ){
+        bookService.removeBookImage(book);
 
         model.addAttribute("book", book);
         return "bookEdit";

@@ -20,7 +20,7 @@
         </#if>
         <div><label class="mt-3">Описание:</label></div>
         <div>
-            <textarea name="descriptions"  maxlength="2048" cols="100%"></textarea>
+            <textarea name="description"  maxlength="2048" cols="100%"></textarea>
         </div>
         <div>
             <label class="mt-3">Обложка:</label>

@@ -3,8 +3,8 @@ insert into hibernate_sequence values ( 1 );
 
 create table book (
     id bigint not null,
-    author varchar(255),
-    descriptions varchar(2048),
+    author varchar(255) not null,
+    description varchar(2048),
     filename varchar(255),
     image_name varchar(255),
     name varchar(255) not null,

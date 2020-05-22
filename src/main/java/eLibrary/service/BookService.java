@@ -26,20 +26,17 @@ public class BookService {
         this.bookRepo = bookRepo;
     }
 
-    public void uploadFile(Book book, MultipartFile file) throws IOException {
+    public void uploadFile(Book book, MultipartFile file, MultipartFile image) throws IOException {
 
-        String resultFilename = createFile(file, uploadFilePath);
+        if(!file.getOriginalFilename().isEmpty()) {
+            String resultFilename = createFile(file, uploadFilePath);
+            book.setFilename(resultFilename);
+        }
 
-        book.setFilename(resultFilename);
-
-        bookRepo.save(book);
-    }
-
-    public void uploadImage(Book book, MultipartFile image) throws IOException {
-
-        String resultFilename = createFile(image, uploadImagePath);
-
-        book.setImageName(resultFilename);
+        if(!image.getOriginalFilename().isEmpty()) {
+            String resultFilename = createFile(image, uploadImagePath);
+            book.setImageName(resultFilename);
+        }
 
         bookRepo.save(book);
     }
@@ -89,6 +86,11 @@ public class BookService {
 
     public void removeBookFile(Book book) {
         book.setFilename(null);
+        bookRepo.save(book);
+    }
+
+    public void removeBookImage(Book book) {
+        book.setImageName(null);
         bookRepo.save(book);
     }
 }

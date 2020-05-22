@@ -17,11 +17,12 @@ public class Book {
 
     @NotBlank(message = "Введите название книги")
     private String name;
+
     @NotBlank(message = "Введите автора")
     private String author;
 
     @Length(max = 2048, message = "Описание слишком длинное")
-    private String descriptions;
+    private String description;
 
     private String filename;
     private String imageName;
@@ -29,10 +30,10 @@ public class Book {
     public Book() {
     }
 
-    public Book(String name, String author, String descriptions) {
+    public Book(String name, String author, String description) {
         this.name = name;
         this.author = author;
-        this.descriptions = descriptions;
+        this.description = description;
     }
 
     public Long getId() {
@@ -59,12 +60,12 @@ public class Book {
         this.author = author;
     }
 
-    public String getDescriptions() {
-        return descriptions;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptions(String descriptions) {
-        this.descriptions = descriptions;
+    public void setDescription(String descriptions) {
+        this.description = descriptions;
     }
 
     public String getFilename() {
