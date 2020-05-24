@@ -7,6 +7,11 @@
                 <div>
                     <img src="/img/${book.imageName}">
                 </div>
+                <div>
+                    <#if isAdmin||isLessonOverseer>
+                        <a href="/book/deleteImage/${book.id}" class="btn btn-warning mt-2">Удалить обложку</a>
+                    </#if>
+                </div>
             </#if>
             <div><label>Название:</label></div>
             <input type="text" name="name" placeholder="Название" value="${book.name}">
@@ -23,40 +28,34 @@
             <#if book.filename??>
                 <div>
                     <a href="/book/download/${book.filename}">Скачать</a>
+                    <#if isAdmin||isLessonOverseer>
+                        <a href="/book/deleteFile/${book.id}" class="btn btn-warning ml-5">Удалить файл</a>
+                    </#if>
                 </div>
             <#else>
                 <div>No file</div>
             </#if>
             <#if isAdmin||isTeacher>
-<#--                <div>-->
-<#--                    <label>Изменить обложку</label>-->
-<#--                    <input type="file" name="image">-->
-<#--                </div>-->
-                    <div class="container">
-                        <div class="row mt-3">
-                            <div class="col">
-                                <label>Изменить обложку: </label>
-                                <input type="file" name="image">
-                            </div>
-                            <div class="col">
-                                <#if isAdmin||isLessonOverseer>
-                                    <a href="/book/deleteImage/${book.id}" class="btn btn-warning ml-5">Удалить обложку</a>
-                                </#if>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col">
-                                <label>Изменить файл:</label>
-                                <input type="file" name="file">
-                            </div>
-                            <div class="col">
-                                <#if isAdmin||isLessonOverseer>
-                                <a href="/book/deleteFile/${book.id}" class="btn btn-warning ml-5">Удалить файл</a>
-                                </#if>
-                            </div>
+                <div class="container">
+                    <div class="row mt-3">
+                        <div class="col">
+                            <label>Изменить обложку: </label>
+                            <input type="file" name="image">
                         </div>
                     </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <label>Изменить файл:</label>
+                        <input type="file" name="file">
+                    </div>
+                    <#--                    <div class="col">-->
+                    <#--                        <#if isAdmin||isLessonOverseer>-->
+                    <#--                            <a href="/book/deleteFile/${book.id}" class="btn btn-warning ml-5">Удалить файл</a>-->
+                    <#--                        </#if>-->
+                    <#--                    </div>-->
+                </div>
+                </div>
 
             </#if>
             <input type="hidden" name="bookId" value="${book.id}"/>

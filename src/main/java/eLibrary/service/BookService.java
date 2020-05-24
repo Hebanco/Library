@@ -81,16 +81,26 @@ public class BookService {
     }
 
     public void removeBook(Book book) {
+        removeBookFile(book);
+        removeBookImage(book);
         bookRepo.delete(book);
     }
 
     public void removeBookFile(Book book) {
-        book.setFilename(null);
-        bookRepo.save(book);
+        if(!book.getFilename().isEmpty()) {
+            File file = new File(uploadFilePath + book.getFilename());
+            file.delete();
+            book.setFilename(null);
+            bookRepo.save(book);
+        }
     }
 
     public void removeBookImage(Book book) {
-        book.setImageName(null);
-        bookRepo.save(book);
+        if(!book.getImageName().isEmpty()) {
+            File file = new File(uploadImagePath + book.getImageName());
+            file.delete();
+            book.setImageName(null);
+            bookRepo.save(book);
+        }
     }
 }
