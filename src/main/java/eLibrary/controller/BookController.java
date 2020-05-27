@@ -61,6 +61,7 @@ public class BookController {
             bookService.uploadFile(book, file, image);
 
             model.addAttribute("book", null);
+            model.addAttribute("success", true);
         }
         return "bookCreate";
     }

@@ -27,7 +27,7 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void saveUser(User user, Map<String, String> form) {
+    public void saveRoles(User user, Map<String, String> form) {
 
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)

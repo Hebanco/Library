@@ -16,7 +16,7 @@ know = Session.SPRING_SECURITY_CONTEXT??
     >
 <#else>
     <#assign
-    name = "anon"
+    name = "Пользователь"
     isAdmin = false
     isTeacher = false
     isLibrarian = false

@@ -55,7 +55,7 @@ public class RegistrationController {
             model.addAttribute("roles", Role.values());
             return "registration";
         }
-        userService.saveUser(user,form);
+        userService.saveRoles(user,form);
 
         model.addAttribute("user",null);
         model.addAttribute("success",true);

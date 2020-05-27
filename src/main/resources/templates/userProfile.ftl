@@ -27,6 +27,7 @@
         <#if (isAdmin||isLessonOverseer) && user.isTeacher()><a href="/lesson/new?teacherId=${user.id}" class="btn btn-info mb-3">добавить предмет</a></#if>
         <#if isAdmin||isUserOverseer>
             <#include "parts/rolesEdit.ftl">
+            <input type="hidden" name="roleCheck" value= "true">
         </#if>
         <div class="mx-auto" style="width: 15%">
             <button type="submit" class="btn btn-primary">Сохранить</button>

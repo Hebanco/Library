@@ -64,11 +64,14 @@ public class UserController {
             @RequestParam(required = false, defaultValue = "", name = "username") String username,
             @RequestParam String password,
             @RequestParam String email,
-            @RequestParam String fio,
+            @RequestParam(required = false, defaultValue = "") String fio,
+            @RequestParam(required = false, defaultValue = "false") boolean roleCheck,
             @RequestParam Map<String, String> form
     ){
         userService.updateProfile(user, username, password, email, fio);
-        userService.saveUser(user, form);
+        if (roleCheck) {
+            userService.saveRoles(user, form);
+        }
         model.addAttribute("user", user);
         model.addAttribute("message", "Save successfully");
         model.addAttribute("roles", Role.values());

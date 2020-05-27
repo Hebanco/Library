@@ -1,5 +1,11 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
+    <#if success??>
+        <div class="alert alert-success" role="alert">
+            Книга добавлена
+        </div>
+    </#if>
+
     <form method="post" action="/book/new" enctype="multipart/form-data">
 
         <div><label>Название:</label></div>

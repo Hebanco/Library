@@ -1,7 +1,9 @@
 <form enctype="multipart/form-data">
     <#if book.imageName??>
         <div>
-            <img src="/img/${book.imageName}"/>
+            <img src="/img/${book.imageName}"
+                 width="15%"
+                 height="15%"/>
         </div>
     </#if>
     <div><label>Название книги: ${book.name}</label></div>
