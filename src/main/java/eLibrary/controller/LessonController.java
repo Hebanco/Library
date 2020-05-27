@@ -24,7 +24,7 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','LESSON_OVERSEER')")
     @GetMapping("/new")
     public String newLesson(
             Model model,

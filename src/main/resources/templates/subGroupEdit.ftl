@@ -4,7 +4,7 @@
 <@c.page>
     <h3><a href="/lesson/${subGroup.lesson.id}">${subGroup.lesson.name}</a></h3>
 
-    <#if myLesson || isAdmin>
+    <#if myLesson || isAdmin || isLessonOverseer>
         <form action="/subGroup/${subGroup.id}" method="get">
             <input type="text" name="filter" value="${filter}">
             <button type="submit" class="btn btn-secondary">Искать</button>

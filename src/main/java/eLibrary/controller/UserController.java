@@ -73,7 +73,7 @@ public class UserController {
             userService.saveRoles(user, form);
         }
         model.addAttribute("user", user);
-        model.addAttribute("message", "Save successfully");
+        model.addAttribute("success", "true");
         model.addAttribute("roles", Role.values());
         return "userProfile";
     }

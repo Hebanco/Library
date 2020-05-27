@@ -2,6 +2,11 @@
 <#include "parts/security.ftl">
 <@c.page>
 
+    <#if success??>
+        <div class="alert alert-success" role="alert">
+            Профиль сохранен
+        </div>
+    </#if>
     ${message?ifExists}
     <form action="/user/profileSave" method="post">
         <#if isAdmin || isUserOverseer>
