@@ -48,7 +48,7 @@ public class LessonController {
             return "lessonCreate";
         }
         lessonService.saveLesson(lesson, teacher);
-
+        model.addAttribute("success", true);
         model.addAttribute("teacher", teacher);
         return "lessonCreate";
     }

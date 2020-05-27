@@ -81,16 +81,18 @@ public class UserService implements UserDetailsService {
 
     public void sendMail(String email) {
         User user = findByEmail(email);
-        user.setActivationCode(UUID.randomUUID().toString());
+        if (user!=null) {
+            user.setActivationCode(UUID.randomUUID().toString());
 
-        String message = String.format(
-                "Приетствую, %s! \n"+
-                        "Ссылка для восстановления пароля: http://localhost:8080/recover/%s",
-                user.getFio(),
-                user.getActivationCode()
-        );
+            String message = String.format(
+                    "Приетствую, %s! \n" +
+                            "Ссылка для восстановления пароля: http://localhost:8080/recover/%s",
+                    user.getFio(),
+                    user.getActivationCode()
+            );
 
-        mailSender.send(user.getEmail(), "Восстановление пароля", message);
+            mailSender.send(user.getEmail(), "Восстановление пароля", message);
+        }
     }
 
     public User findByActivationCode(String code) {

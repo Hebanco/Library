@@ -14,37 +14,37 @@
             <div class="mt-2">Название подгруппы:</div>
             <input type="text" name="name" value="${subGroup.name}">
             <div class="mt-4">Текущие книги:</div>
-            <table>
-                <tbody>
-                <#list books as book>
-                    <tr>
-                        <td>${book.name}</td>
-                        <td>${book.author}</td>
-                        <td><a href="/book/${book.id}">Открыть</a> </td>
-                        <td><a href="/subGroup/delete/${subGroup.id}/${book.id}">Удалить</a> </td>
-                    </tr>
-                <#else>
-                    <div>Книг нету</div>
-                </#list>
-                </tbody>
-            </table>
+
+            <#list books as book>
+                <div>
+                    <#if book.imageName??>
+                        <img src="/img/${book.imageName}" width="4%" height="4%">
+                    </#if>
+                    ${book.name}
+                    ${book.author}
+                    <a href="/book/${book.id}">Открыть</a>
+                    <a href="/subGroup/delete/${subGroup.id}/${book.id}">Удалить</a> </td>
+                </div>
+            <#else>
+                <div>Книг нету</div>
+            </#list>
+
 
             <div class="mt-4">Возможные книги:</div>
-            <table>
-                <tbody
-                <#list possibleBook as pBook>
+            <#list possibleBook as pBook>
 
-                    <tr>
-                        <td>${pBook.name}</td>
-                        <td>${pBook.author}</td>
-                        <td><a href="/book/${pBook.id}">Открыть</a> </td>
-                        <td><a href="/subGroup/add/${subGroup.id}/${pBook.id}">Добавить</a> </td>
-                    </tr>
-                <#else>
-                    Книг нету
-                </#list>
-                </tbody>
-            </table>
+                <div class="mt-3">
+                    <#if pBook.imageName??>
+                        <img src="/img/${pBook.imageName}" width="4%" height="4%">
+                    </#if>
+                    ${pBook.name}
+                    ${pBook.author}
+                    <a href="/book/${pBook.id}">Открыть</a>
+                    <a href="/subGroup/add/${subGroup.id}/${pBook.id}">Добавить</a> </td>
+                </div>
+            <#else>
+                Книг нету
+            </#list>
             <input type="hidden" value="${subGroup.id}" name="subGroupId">
             <input type="hidden" value="${_csrf.token}" name="_csrf">
             <button type="submit" class="btn btn-primary mt-2">Сохранить</button>

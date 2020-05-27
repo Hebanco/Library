@@ -87,7 +87,7 @@ public class BookService {
     }
 
     public void removeBookFile(Book book) {
-        if(!book.getFilename().isEmpty()) {
+        if(book.getFilename()!= null && !book.getFilename().isEmpty()) {
             File file = new File(uploadFilePath + book.getFilename());
             file.delete();
             book.setFilename(null);
@@ -96,7 +96,7 @@ public class BookService {
     }
 
     public void removeBookImage(Book book) {
-        if(!book.getImageName().isEmpty()) {
+        if(book.getImageName()!= null && !book.getImageName().isEmpty()) {
             File file = new File(uploadImagePath + book.getImageName());
             file.delete();
             book.setImageName(null);

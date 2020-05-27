@@ -24,7 +24,7 @@
                 <td><a href="/subGroup/${subGroup.id}">${subGroup.name}</a></td>
 
                 <#if isLessonOverseer || isAdmin || myLesson>
-                    <td><a href="/lesson/${lesson.id}/delete/${subGroup.id}"/>Удалить</td>
+                    <td class="ml-2"><a href="/lesson/${lesson.id}/delete/${subGroup.id}"/>Удалить</td>
                 </#if>
             </tr>
         </#list>

@@ -23,7 +23,7 @@
     <#list users as user>
         <tr>
             <td>${user.fio}</td>
-            <td>${user.username}</td>
+            <td class="ml-3">${user.username}</td>
             <#if isAdmin || isUserOverseer || isLessonOverseer>
                 <td><a href="/user/profile/${user.id}" class="btn btn-info">Профиль пользовтеля</a> </td>
             </#if>

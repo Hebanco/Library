@@ -26,7 +26,7 @@
         <#if isRegisterForm>
             <div class="mt-2">
                 <label for="inputFIO"> ФИО:  </label>
-                <input type="text" name="fio"
+                <input type="text" name="fio" value="<#if user??>${user.fio}</#if>"
                        class="form-control ${(fioError??)?string('is-invalid', '')}"
                        id = "inputFIO" placeholder="ФИО"/>
                 <#if fioError??>

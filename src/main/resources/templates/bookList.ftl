@@ -12,12 +12,13 @@
                 </form>
             </div>
         </div>
-
         <div id="books-list">
             <#list books as book>
-                <div data-id="${book.id}">
+                <div data-id="${book.id} ">
                     <#if book.imageName??>
-                        <img src="/img/${book.imageName}"/>
+                        <img src="/img/${book.imageName}"
+                        width="7%"
+                        height="7%" class="mt-3"/>
                     </#if>
 <#--                    <span id="">#{book.id}</span>-->
                     <span id = "name">${book.name}</span>
