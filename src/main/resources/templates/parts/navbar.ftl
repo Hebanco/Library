@@ -47,6 +47,19 @@
                     </div>
                 </li>
             </#if>
+
+            <#if isAdmin || isLessonOverseer>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Отчеты
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/report/lessons">Занятия и преподаватели</a>
+                        <a class="dropdown-item" href="/report/books">Книги</a>
+                        <a class="dropdown-item" href="/report/files">Файлы</a>
+                    </div>
+                </li>
+            </#if>
         </ul>
 
         <div class="navbar-text mr-3"><#if currentUser??> <a class="nav-link" href="/user/myProfile">${fio}</a><#else>${name}</#if></div>

@@ -2,7 +2,7 @@
 <@c.page>
     <#if success??>
         <div class="alert alert-success" role="alert">
-            Пользователь создан
+            Занятие создано
         </div>
     </#if>
     <form method="post" action="/lesson/new">
