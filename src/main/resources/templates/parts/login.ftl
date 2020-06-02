@@ -47,11 +47,13 @@
                 </#if>
             </div>
 
-            <#list roles as role>
-                <div>
-                    <label><input type="checkbox" name="${role}"/>${role.getRusName()}</label>
-                </div>
-            </#list>
+            <div class="mt-3" id="roles">
+                <#list roles as role>
+                    <div>
+                        <label><input type="checkbox" name="${role}"/>${role.getRusName()}</label>
+                    </div>
+                </#list>
+            </div>
         </#if>
         <#if !isRegisterForm> <a href="/recover">Восстановление пароля</a></#if>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
