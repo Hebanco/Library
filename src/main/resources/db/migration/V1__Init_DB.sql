@@ -48,20 +48,30 @@ create table usr (
 
 alter table lesson
     add constraint lesson_user_fk
-    foreign key (user_id) references usr (id);
+    foreign key (user_id) references usr (id)
+    on delete cascade
+    on update cascade;
 
 alter table sub_group
     add constraint subGroup_lesson_fk
-    foreign key (lesson_id) references lesson (id);
+    foreign key (lesson_id) references lesson (id)
+    on delete cascade
+    on update cascade;
 
 alter table sub_group_books
     add constraint subGroup_book_fk
-    foreign key (subgroup_id) references book (id);
+    foreign key (subgroup_id) references book (id)
+    on delete cascade
+    on update cascade;
 
 alter table sub_group_books
     add constraint book_subGroup_fk
-    foreign key (book_id) references sub_group (id);
+    foreign key (book_id) references sub_group (id)
+    on delete cascade
+    on update cascade;
 
 alter table user_role
     add constraint user_role_fk
-    foreign key (user_id) references usr (id);
+    foreign key (user_id) references usr (id)
+    on delete cascade
+    on update cascade;

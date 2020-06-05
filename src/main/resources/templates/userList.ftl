@@ -1,6 +1,7 @@
 <#import "parts/common.ftl" as c>
     <#include "parts/security.ftl">
 <@c.page>
+    <a href="/registration" class="btn btn-primary mb-3">Добавить пользователя</a>
 
     <div class="form-row">
         <div class="form-group col-md-6">
